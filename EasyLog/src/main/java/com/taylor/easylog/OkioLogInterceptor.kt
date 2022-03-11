@@ -59,7 +59,7 @@ class OkioLogInterceptor private constructor(private var dir: String) : LogInter
         handler = Handler(handlerThread.looper, callback)
     }
 
-    override fun log(priority: Int, tag: String, log: String) {
+    override fun log(priority: Int, tag: String, log: String, chain: Chain) {
         // prevent HandlerThread being killed
         if (!handlerThread.isAlive) handlerThread.start()
         handler.run {
@@ -68,6 +68,7 @@ class OkioLogInterceptor private constructor(private var dir: String) : LogInter
             val flushMessage = handler.obtainMessage(TYPE_FLUSH)
             sendMessageDelayed(flushMessage, FLUSH_LOG_DELAY_MILLIS)
         }
+        chain.proceed(priority, tag, log)
     }
 
     override fun enable(): Boolean {

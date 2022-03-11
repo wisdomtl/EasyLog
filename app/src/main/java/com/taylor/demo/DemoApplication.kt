@@ -1,6 +1,7 @@
 package com.taylor.demo
 
 import android.app.Application
+import com.taylor.easylog.CallStackLogInterceptor
 import com.taylor.easylog.EasyLog
 import com.taylor.easylog.LogcatInterceptor
 import com.taylor.easylog.OkioLogInterceptor
@@ -25,6 +26,7 @@ class DemoApplication : Application() {
     }
 
     private fun initEasyLog() {
+        EasyLog.addInterceptor(CallStackLogInterceptor(12))
         EasyLog.addInterceptor(LogcatInterceptor())
         EasyLog.addInterceptor(OkioLogInterceptor.getInstance(this.filesDir.absolutePath))
     }

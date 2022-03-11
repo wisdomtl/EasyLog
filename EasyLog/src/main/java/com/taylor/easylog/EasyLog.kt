@@ -37,7 +37,7 @@ object EasyLog {
     private const val ASSERT = 7
 
     private val logInterceptors = mutableListOf<LogInterceptor>()
-
+    private val interceptorChain = Chain(logInterceptors)
 
     fun d(message: String, tag: String = "", vararg args: Any) {
         log(DEBUG, message, tag, *args)
@@ -67,6 +67,14 @@ object EasyLog {
         logInterceptors.add(interceptor)
     }
 
+    fun addFirstInterceptor(interceptor: LogInterceptor) {
+        logInterceptors.add(0, interceptor)
+    }
+
+    fun removeInterceptor(interceptor: LogInterceptor) {
+        logInterceptors.remove(interceptor)
+    }
+
     @Synchronized
     private fun log(
         priority: Int,
@@ -79,9 +87,11 @@ object EasyLog {
         if (throwable != null) {
             logMessage += getStackTraceString(throwable)
         }
-        logInterceptors.forEach { interceptor ->
-            if (interceptor.enable()) interceptor.log(priority, tag, logMessage)
-        }
+
+        interceptorChain.proceed(priority, tag, logMessage)
+//        logInterceptors.forEach { interceptor ->
+//            if (interceptor.enable()) interceptor.log(priority, tag, logMessage,)
+//        }
     }
 
     fun String.format(vararg args: Any) =
