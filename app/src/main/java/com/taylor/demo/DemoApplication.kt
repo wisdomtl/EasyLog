@@ -17,6 +17,9 @@ class DemoApplication : Application() {
         initTaylorSdk()
     }
 
+    /**
+     * init another module
+     */
     private fun initTaylorSdk() {
         TaylorSdk()
     }
