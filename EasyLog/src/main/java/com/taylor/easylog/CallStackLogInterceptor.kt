@@ -2,7 +2,7 @@ package com.taylor.easylog
 
 import java.lang.StringBuilder
 
-class CallStackLogInterceptor() : LogInterceptor {
+class CallStackLogInterceptor : LogInterceptor {
     companion object {
         private const val HEADER =
             "┌──────────────────────────────────────────────────────────────────────────────────────────────────────"
