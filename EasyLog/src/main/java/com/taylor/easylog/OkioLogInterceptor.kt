@@ -33,10 +33,6 @@ class OkioLogInterceptor private constructor(private var dir: String) : LogInter
                 sink.writeUtf8("\n")
             }
         }
-        if (message.obj as? String == "work done") Log.v(
-            "ttaylor1",
-            "log() work is ok done=${System.currentTimeMillis() - startTime}"
-        )
         false
     }
 

@@ -26,7 +26,7 @@ class DemoApplication : Application() {
     }
 
     private fun initEasyLog() {
-        EasyLog.addInterceptor(CallStackLogInterceptor(12))
+        EasyLog.addInterceptor(CallStackLogInterceptor())
         EasyLog.addInterceptor(LogcatInterceptor())
         EasyLog.addInterceptor(OkioLogInterceptor.getInstance(this.filesDir.absolutePath))
     }
