@@ -7,6 +7,7 @@ import android.util.Log
 import okio.BufferedSink
 import okio.appendingSink
 import okio.buffer
+import okio.gzip
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -79,7 +80,7 @@ class OkioLogInterceptor private constructor(private var dir: String) : LogInter
 
     private fun checkSink(): BufferedSink {
         if (bufferedSink == null) {
-            bufferedSink = logFile.appendingSink().buffer()
+            bufferedSink = logFile.appendingSink().gzip().buffer()
         }
         return bufferedSink!!
     }
