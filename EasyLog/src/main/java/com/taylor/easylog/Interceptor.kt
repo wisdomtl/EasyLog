@@ -6,12 +6,12 @@ interface Interceptor<INPUT> {
      * @return whether terminate the responsibility chain
      */
     fun log(message: INPUT, tag: String, priority: Int, chain: Chain) {}
-
-    /**
-     * print the logs
-     * @return whether terminate the responsibility chain
-     */
-    fun logBatch(vararg messages: INPUT, tag: String, priority: Int, chain: Chain) {}
+//
+//    /**
+//     * print the logs
+//     * @return whether terminate the responsibility chain
+//     */
+//    fun logBatch(vararg messages: INPUT, tag: String, priority: Int, chain: Chain) {}
 
     /**
      * whether apply [log] logic

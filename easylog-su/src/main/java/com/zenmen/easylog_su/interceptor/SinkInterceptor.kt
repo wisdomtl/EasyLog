@@ -1,22 +1,18 @@
 package com.zenmen.easylog_su.interceptor
 
-import android.content.Context
 import com.taylor.easylog.Chain
 import com.taylor.easylog.Interceptor
-import com.tencent.mmkv.MMKV
-import com.zenmen.easylog_proto.proto.gen.LogOuterClass.Log
+import com.zenmen.easylog_su.proto.gen.LogOuterClass.Log
 
-class SinkInterceptor(context: Context) : Interceptor<Log> {
-    init {
-        MMKV.initialize(context)
-    }
-
-    private val mmkv = MMKV.defaultMMKV()
-
+class SinkInterceptor(private val sink: Sink?) : Interceptor<Log> {
     override fun log(message: Log, tag: String, priority: Int, chain: Chain) {
-        if (enable()) mmkv.encode(message.id.toString(), message.toByteArray())
+        if (enable()) sink?.output(message, tag)
         chain.proceed(message, tag, priority)
     }
 
     override fun enable(): Boolean = true
+
+    interface Sink {
+        fun output(message: Log, tag: String)
+    }
 }

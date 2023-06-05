@@ -39,11 +39,10 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-
-    api project(':easylog-proto')
+    api 'com.google.protobuf:protobuf-java:3.21.12'
+    api 'com.google.protobuf:protobuf-kotlin:3.21.12'
     implementation("com.squareup.okio:okio:3.0.0")
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
-    implementation 'com.tencent:mmkv:1.2.16'
-    implementation "com.squareup.retrofit2:retrofit:2.9.0"
-    implementation "com.squareup.okhttp3:okhttp:4.10.0"
+    api project(':EasyLog')
+
 }

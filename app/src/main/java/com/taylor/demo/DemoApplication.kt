@@ -1,20 +1,33 @@
 package com.taylor.demo
 
 import android.app.Application
-import com.taylor.demo.protobuf.gen.adLog
+import com.taylor.demo.api.TrackApi
+import com.taylor.demo.protobuf.gen.AdLog.LoadSuccess
+import com.taylor.demo.protobuf.gen.loadSuccess
 import com.taylor.easylog.EasyLog
 import com.taylor.easylog.LogcatInterceptor
-import com.zenmen.easylog_proto.LogWrapperInterceptor
+import com.tencent.mmkv.MMKV
+
 import com.zenmen.easylog_su.interceptor.BatchInterceptor
 import com.zenmen.easylog_su.interceptor.LinearInterceptor
+import com.zenmen.easylog_su.interceptor.LogWrapperInterceptor
 import com.zenmen.easylog_su.interceptor.SinkInterceptor
 import com.zenmen.easylog_su.interceptor.UploadInterceptor
+import com.zenmen.easylog_su.proto.gen.LogOuterClass.Log
+import com.zenmen.easylog_su.proto.gen.LogOuterClass.LogBatch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.protobuf.ProtoConverterFactory
+import java.util.concurrent.TimeUnit
 
 
 class DemoApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        MMKV.initialize(this)
         /**
          * ensure EasyLog do init before other module, which also depends on EasyLog
          */
@@ -29,21 +42,69 @@ class DemoApplication : Application() {
 //        TaylorSdk()
     }
 
+    val okHttpClient by lazy {
+        OkHttpClient.Builder()
+            .retryOnConnectionFailure(true)
+            .callTimeout(5, TimeUnit.SECONDS)
+            .build()
+    }
+
+    private val retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://api.zenmen.com/")
+            .client(okHttpClient)
+            .addConverterFactory(ProtoConverterFactory.create())
+            .build()
+    }
+    private val trackApi by lazy { retrofit.create(TrackApi::class.java) }
+
+    private val mmkv by lazy {
+        MMKV.defaultMMKV()
+    }
+    private val sink by lazy {
+        object : SinkInterceptor.Sink {
+            override fun output(message: Log, tag: String) {
+                mmkv.encode(message.id.toString(), message.toByteArray())
+            }
+        }
+    }
+    private val scope = CoroutineScope(Dispatchers.IO)
+
+    private val uploader by lazy {
+        object : UploadInterceptor.Uploader {
+            override fun upload(messages: LogBatch, tag: String) {
+//                scope.launch { trackApi.track(messages) }
+                messages.logList.map { it.id to it.data.unpack(LoadSuccess::class.java) }.print { "${it.first} to ${it.second} and ${it.second.isHitCache}" }.let {
+                    android.util.Log.i("ttaylor", "DemoApplication.upload() logBatch=${it}");
+                }
+            }
+        }
+    }
+
     private fun initEasyLog() {
         EasyLog.apply {
             addInterceptor(LogcatInterceptor())
             addInterceptor(LinearInterceptor())
             addInterceptor(LogWrapperInterceptor())
-            addInterceptor(SinkInterceptor(this@DemoApplication))
+            addInterceptor(SinkInterceptor(sink))
             addInterceptor(BatchInterceptor(5, 10_000))
-            addInterceptor(UploadInterceptor())
+            addInterceptor(UploadInterceptor(uploader))
         }
         repeat(5) {
-            EasyLog.logMessage(adLog {
-                name = "native"
-                count = it
-                isOpen = true
-            }, "ttaylor2222")
+            EasyLog.logMessage(loadSuccess {
+                duration = 100
+                isHitCache = it %2  == 0
+                count = 2
+            }, tag = "ttaylor")
         }
     }
 }
+
+/**
+ * print collection bean in which you interested defined by [map]
+ */
+fun <T> Collection<T>.print(map: (T) -> String) =
+    StringBuilder("[").also { sb ->
+        this.forEach { e -> sb.append("\t${map(e)},") }
+        sb.append("]")
+    }.toString()

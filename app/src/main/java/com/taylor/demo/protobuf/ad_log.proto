@@ -2,8 +2,24 @@ syntax = "proto3";
 
 package com.taylor.demo.protobuf.gen;
 
-message AdLog {
-  string name = 1;
+message LoadSuccess {
+  int32 duration = 1;
   int32 count = 2;
-  bool isOpen = 3;
+  bool isHitCache = 3;
+}
+
+message LoadFail {
+  string message = 1;
+  int32  code = 2;
+}
+
+message Event {
+  oneof event {
+    LoadSuccess loadSuccess = 1;
+    LoadFail loadFail = 2;
+  }
+}
+
+message EventBatch {
+  repeated Event events = 1;
 }

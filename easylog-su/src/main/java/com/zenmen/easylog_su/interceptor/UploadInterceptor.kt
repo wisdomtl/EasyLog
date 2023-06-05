@@ -2,13 +2,17 @@ package com.zenmen.easylog_su.interceptor
 
 import com.taylor.easylog.Chain
 import com.taylor.easylog.Interceptor
-import com.zenmen.easylog_proto.proto.gen.LogOuterClass.Log
+import com.zenmen.easylog_su.proto.gen.LogOuterClass.LogBatch
 
-class UploadInterceptor : Interceptor<Log> {
+class UploadInterceptor(private val uploader: Uploader?) : Interceptor<LogBatch> {
 
-    override fun logBatch(vararg messages: Log, tag: String, priority: Int, chain: Chain) {
-        android.util.Log.e("ttaylor", "UploadInterceptor.logBatch() messages=${messages.fold("") { acc: String, log: Log -> acc + log.toString() }}");
+    override fun log(message: LogBatch, tag: String, priority: Int, chain: Chain) {
+        if (enable()) uploader?.upload(message, tag)
     }
 
     override fun enable(): Boolean = true
+
+    interface Uploader {
+        fun upload(messages: LogBatch, tag: String)
+    }
 }
