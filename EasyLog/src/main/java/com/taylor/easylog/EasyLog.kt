@@ -38,8 +38,9 @@ object EasyLog {
      */
     const val ASSERT = 7
 
-    val interceptors = mutableListOf<Interceptor<*>>()
-    private val chain = Chain(interceptors)
+    val interceptors = mutableListOf<Interceptor<in Nothing>>()
+    val interceptorClasses = mutableListOf<Class<*>>()
+    private val chain = Chain(interceptors, interceptorClasses)
 
 
     fun d(message: String, tag: String = "", vararg args: Any) {
@@ -71,11 +72,12 @@ object EasyLog {
     }
 
     inline fun <reified T> addInterceptor(interceptor: Interceptor<T>) {
-        interceptors.add(interceptor)
+        addInterceptor(interceptors.size, interceptor)
     }
 
-    inline fun <reified T> addFirstInterceptor(interceptor: Interceptor<T>) {
-        interceptors.add(0, interceptor)
+    inline fun <reified T> addInterceptor(index: Int, interceptor: Interceptor<T>) {
+        interceptors.add(index, interceptor)
+        interceptorClasses.add(index, T::class.java)
     }
 
     fun removeInterceptor(interceptor: Interceptor<*>) {

@@ -1,17 +1,17 @@
 package com.taylor.easylog
 
-interface Interceptor<T> {
+interface Interceptor<INPUT> {
     /**
      * print the log
      * @return whether terminate the responsibility chain
      */
-    fun log(message: T, tag: String, priority: Int, chain: Chain) {}
+    fun log(message: INPUT, tag: String, priority: Int, chain: Chain) {}
 
     /**
      * print the logs
      * @return whether terminate the responsibility chain
      */
-    fun logBatch(vararg messages: T, tag: String, priority: Int, chain: Chain) {}
+    fun logBatch(vararg messages: INPUT, tag: String, priority: Int, chain: Chain) {}
 
     /**
      * whether apply [log] logic
