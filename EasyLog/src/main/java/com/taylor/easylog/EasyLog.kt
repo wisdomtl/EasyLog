@@ -1,5 +1,7 @@
 package com.taylor.easylog
 
+import android.annotation.SuppressLint
+import android.content.Context
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.net.UnknownHostException
@@ -9,35 +11,36 @@ object EasyLog {
     /**
      * Priority constant for the println method; use Log.v.
      */
-    private const val VERBOSE = 2
+    const val VERBOSE = 2
 
     /**
      * Priority constant for the println method; use Log.d.
      */
-    private const val DEBUG = 3
+    const val DEBUG = 3
 
     /**
      * Priority constant for the println method; use Log.i.
      */
-    private const val INFO = 4
+    const val INFO = 4
 
     /**
      * Priority constant for the println method; use Log.w.
      */
-    private const val WARN = 5
+    const val WARN = 5
 
     /**
      * Priority constant for the println method; use Log.e.
      */
-    private const val ERROR = 6
+    const val ERROR = 6
 
     /**
      * Priority constant for the println method.
      */
-    private const val ASSERT = 7
+    const val ASSERT = 7
 
-    private val logInterceptors = mutableListOf<LogInterceptor>()
-    private val interceptorChain = Chain(logInterceptors)
+    val interceptors = mutableListOf<Interceptor<*>>()
+    private val chain = Chain(interceptors)
+
 
     fun d(message: String, tag: String = "", vararg args: Any) {
         log(DEBUG, message, tag, *args)
@@ -63,16 +66,20 @@ object EasyLog {
         log(ASSERT, message, tag, *args)
     }
 
-    fun addInterceptor(interceptor: LogInterceptor) {
-        logInterceptors.add(interceptor)
+    fun logMessage(message: Any, tag: String, priority: Int = VERBOSE) {
+        chain.proceed(message, tag, priority)
     }
 
-    fun addFirstInterceptor(interceptor: LogInterceptor) {
-        logInterceptors.add(0, interceptor)
+    inline fun <reified T> addInterceptor(interceptor: Interceptor<T>) {
+        interceptors.add(interceptor)
     }
 
-    fun removeInterceptor(interceptor: LogInterceptor) {
-        logInterceptors.remove(interceptor)
+    inline fun <reified T> addFirstInterceptor(interceptor: Interceptor<T>) {
+        interceptors.add(0, interceptor)
+    }
+
+    fun removeInterceptor(interceptor: Interceptor<*>) {
+        interceptors.remove(interceptor)
     }
 
     @Synchronized
@@ -83,18 +90,19 @@ object EasyLog {
         vararg args: Any,
         throwable: Throwable? = null
     ) {
+        val logMessage = formatLog(message, args, throwable)
+        chain.proceed(logMessage, tag, priority)
+    }
+
+    private fun formatLog(message: String, args: Array<out Any>, throwable: Throwable?): String {
         var logMessage = message.format(*args)
         if (throwable != null) {
             logMessage += getStackTraceString(throwable)
         }
-
-        interceptorChain.proceed(priority, tag, logMessage)
-//        logInterceptors.forEach { interceptor ->
-//            if (interceptor.enable()) interceptor.log(priority, tag, logMessage,)
-//        }
+        return logMessage
     }
 
-    fun String.format(vararg args: Any) =
+    private fun String.format(vararg args: Any) =
         if (args.isNullOrEmpty()) this else String.format(this, *args)
 
     private fun getStackTraceString(tr: Throwable?): String {

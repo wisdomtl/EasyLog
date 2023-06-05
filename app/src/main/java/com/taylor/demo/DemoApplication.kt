@@ -1,11 +1,15 @@
 package com.taylor.demo
 
 import android.app.Application
-import com.taylor.easylog.CallStackLogInterceptor
+import com.taylor.demo.protobuf.gen.adLog
 import com.taylor.easylog.EasyLog
 import com.taylor.easylog.LogcatInterceptor
-import com.taylor.easylog.OkioLogInterceptor
-import com.taylor.module1.TaylorSdk
+import com.zenmen.easylog_proto.LogWrapperInterceptor
+import com.zenmen.easylog_su.interceptor.BatchInterceptor
+import com.zenmen.easylog_su.interceptor.LinearInterceptor
+import com.zenmen.easylog_su.interceptor.SinkInterceptor
+import com.zenmen.easylog_su.interceptor.UploadInterceptor
+
 
 class DemoApplication : Application() {
 
@@ -22,12 +26,24 @@ class DemoApplication : Application() {
      * init another module
      */
     private fun initTaylorSdk() {
-        TaylorSdk()
+//        TaylorSdk()
     }
 
     private fun initEasyLog() {
-        EasyLog.addInterceptor(CallStackLogInterceptor())
-        EasyLog.addInterceptor(LogcatInterceptor())
-        EasyLog.addInterceptor(OkioLogInterceptor.getInstance(this.filesDir.absolutePath))
+        EasyLog.apply {
+            addInterceptor(LogcatInterceptor())
+            addInterceptor(LinearInterceptor())
+            addInterceptor(LogWrapperInterceptor())
+            addInterceptor(SinkInterceptor(this@DemoApplication))
+            addInterceptor(BatchInterceptor(5, 10_000))
+            addInterceptor(UploadInterceptor())
+        }
+        repeat(5) {
+            EasyLog.logMessage(adLog {
+                name = "native"
+                count = it
+                isOpen = true
+            }, "ttaylor2222")
+        }
     }
 }

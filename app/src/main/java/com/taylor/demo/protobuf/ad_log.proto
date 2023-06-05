@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package com.taylor.demo.protobuf.gen;
+
+message AdLog {
+  string name = 1;
+  int32 count = 2;
+  bool isOpen = 3;
+}

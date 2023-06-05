@@ -14,9 +14,10 @@
             <option value="$PROJECT_DIR$/EasyLog" />
             <option value="$PROJECT_DIR$/Module1" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/easylog-proto" />
+            <option value="$PROJECT_DIR$/easylog-su" />
           </set>
         </option>
-        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

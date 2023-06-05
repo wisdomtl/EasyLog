@@ -8,6 +8,6 @@ class DemoActivity:AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        EasyLog.v("DemoActivity.onCreate()","taylor")
+//        EasyLog.v("DemoActivity.onCreate()","taylor")
     }
 }

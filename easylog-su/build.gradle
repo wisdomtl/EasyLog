@@ -1,19 +1,18 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
 
 android {
-    compileSdk 31
+    namespace 'com.zenmen.easylog_su'
+    compileSdk 33
 
     defaultConfig {
-        applicationId "com.taylor.easylog"
         minSdk 24
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -39,7 +38,12 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    implementation project(":easylog-su")
-//    implementation project(":Module1")
-//    implementation project(":EasyLog")
+
+
+    api project(':easylog-proto')
+    implementation("com.squareup.okio:okio:3.0.0")
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+    implementation 'com.tencent:mmkv:1.2.16'
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.okhttp3:okhttp:4.10.0"
 }

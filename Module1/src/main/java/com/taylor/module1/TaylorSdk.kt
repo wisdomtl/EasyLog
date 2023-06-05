@@ -5,6 +5,6 @@ import com.taylor.easylog.EasyLog
 class TaylorSdk {
 
     init {
-        EasyLog.d("TaylorSdk is initiating","TaylorSdk")
+//        EasyLog.d("TaylorSdk is initiating","TaylorSdk")
     }
 }

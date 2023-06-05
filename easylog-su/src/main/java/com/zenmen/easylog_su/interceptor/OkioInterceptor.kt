@@ -1,9 +1,10 @@
-package com.taylor.easylog
+package com.zenmen.easylog_su.interceptor
 
 import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.HandlerThread
-import android.util.Log
+import com.taylor.easylog.Chain
+import com.taylor.easylog.Interceptor
 import okio.BufferedSink
 import okio.appendingSink
 import okio.buffer
@@ -12,7 +13,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class OkioLogInterceptor private constructor(private var dir: String) : LogInterceptor {
+class OkioInterceptor private constructor(private var dir: String) : Interceptor<Any> {
     private val handlerThread = HandlerThread("log_to_file_thread")
     private val handler: Handler
     private var startTime = System.currentTimeMillis()
@@ -43,11 +44,11 @@ class OkioLogInterceptor private constructor(private var dir: String) : LogInter
         private const val FLUSH_LOG_DELAY_MILLIS = 3000L
 
         @Volatile
-        private var INSTANCE: OkioLogInterceptor? = null
+        private var INSTANCE: OkioInterceptor? = null
 
-        fun getInstance(dir: String): OkioLogInterceptor =
+        fun getInstance(dir: String): OkioInterceptor =
             INSTANCE ?: synchronized(this) {
-                INSTANCE ?: OkioLogInterceptor(dir).apply { INSTANCE = this }
+                INSTANCE ?: OkioInterceptor(dir).apply { INSTANCE = this }
             }
     }
 
@@ -56,16 +57,16 @@ class OkioLogInterceptor private constructor(private var dir: String) : LogInter
         handler = Handler(handlerThread.looper, callback)
     }
 
-    override fun log(priority: Int, tag: String, log: String, chain: Chain) {
+    override fun log(message: Any, tag: String, priority: Int, chain: Chain) {
         // prevent HandlerThread being killed
         if (!handlerThread.isAlive) handlerThread.start()
         handler.run {
             removeMessages(TYPE_FLUSH)
-            obtainMessage(TYPE_LOG, "[$tag] $log").sendToTarget()
+            obtainMessage(TYPE_LOG, "[$tag] $message").sendToTarget()
             val flushMessage = handler.obtainMessage(TYPE_FLUSH)
             sendMessageDelayed(flushMessage, FLUSH_LOG_DELAY_MILLIS)
         }
-        chain.proceed(priority, tag, log)
+        chain.proceed(message, tag, priority)
     }
 
     override fun enable(): Boolean {
