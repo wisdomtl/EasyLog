@@ -1,12 +1,13 @@
-package com.zenmen.easylog_proto
+package com.zenmen.easylog_su.interceptor
 
 
 import com.google.protobuf.Message
-import com.taylor.easylog.Chain
-import com.taylor.easylog.Interceptor
-import com.zenmen.easylog_proto.proto.gen.log
+
 import java.util.Date
 import com.google.protobuf.Any
+import com.taylor.easylog.Chain
+import com.taylor.easylog.Interceptor
+import com.zenmen.easylog_su.proto.gen.log
 
 class LogWrapperInterceptor : Interceptor<Message> {
     private val date = Date()
