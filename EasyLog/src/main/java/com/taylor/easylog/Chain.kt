@@ -8,7 +8,7 @@ class Chain(
     private val index: Int = 0
 ) {
 
-    fun proceed(message: Any, tag: String, priority: Int) {
+    fun proceed(message: Any, tag: String, priority: Int, vararg args: Any) {
         val requireClass = interceptorClasses.getOrNull(index)
         if (requireClass == Object::class.java || requireClass?.isAssignableFrom(message::class.java) == true) {
             val next = Chain(interceptors, interceptorClasses, index + 1)// new Chain every time to avoid multi-thread problem(index is val)

@@ -67,8 +67,8 @@ object EasyLog {
         log(ASSERT, message, tag, *args)
     }
 
-    fun logMessage(message: Any, tag: String, priority: Int = VERBOSE) {
-        chain.proceed(message, tag, priority)
+    fun logMessage(message: Any, tag: String, priority: Int = VERBOSE, vararg args: Any) {
+        chain.proceed(message, tag, priority, args)
     }
 
     inline fun <reified T> addInterceptor(interceptor: Interceptor<T>) {

@@ -19,7 +19,7 @@ class CallStackInterceptor : Interceptor<Any> {
         )
     }
 
-    override fun log(message: Any, tag: String, priority: Int, chain: Chain) {
+    override fun log(message: Any, tag: String, priority: Int, chain: Chain, vararg args: Any) {
         chain.proceed(HEADER, tag, priority)
         chain.proceed("$LEFT_BORDER$message", tag, priority)
         getCallStack(blackList).forEach {

@@ -3,7 +3,7 @@ package com.taylor.easylog
 import android.util.Log
 
 open class LogcatInterceptor : Interceptor<Any> {
-    override fun log(message: Any, tag: String, priority: Int, chain: Chain) {
+    override fun log(message: Any, tag: String, priority: Int, chain: Chain, vararg args: Any) {
         if (enable()) Log.println(priority, tag, message.toString())
         chain.proceed(message, tag, priority)
     }

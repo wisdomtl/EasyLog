@@ -5,7 +5,7 @@ interface Interceptor<INPUT> {
      * print the log
      * @return whether terminate the responsibility chain
      */
-    fun log(message: INPUT, tag: String, priority: Int, chain: Chain) {}
+    fun log(message: INPUT, tag: String, priority: Int, chain: Chain, vararg args: Any)
 //
 //    /**
 //     * print the logs

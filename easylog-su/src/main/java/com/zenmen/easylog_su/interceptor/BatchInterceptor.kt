@@ -14,7 +14,7 @@ class BatchInterceptor(private val size: Int, private val duration: Long) : Inte
     private val list = mutableListOf<Log>()
     private var lastTime = 0L
 
-    override fun log(message: Log, tag: String, priority: Int, chain: Chain) {
+    override fun log(message: Log, tag: String, priority: Int, chain: Chain, vararg args: Any) {
         if (enable()) {
             list.add(message)
             if (lastTime != 0L && SystemClock.elapsedRealtime() - lastTime >= duration || list.size >= size) {
