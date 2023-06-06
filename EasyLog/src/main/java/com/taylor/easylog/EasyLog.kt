@@ -1,7 +1,6 @@
 package com.taylor.easylog
 
-import android.annotation.SuppressLint
-import android.content.Context
+import androidx.core.graphics.rotationMatrix
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.net.UnknownHostException
@@ -38,46 +37,49 @@ object EasyLog {
      */
     const val ASSERT = 7
 
-    val interceptors = mutableListOf<Interceptor<in Nothing>>()
-    val interceptorClasses = mutableListOf<Class<*>>()
-    private val chain = Chain(interceptors, interceptorClasses)
+    private val interceptors = mutableListOf<Interceptor<in Nothing>>()
+    private val chain = Chain(interceptors)
 
 
-    fun d(message: String, tag: String = "", vararg args: Any) {
-        log(DEBUG, message, tag, *args)
+//    fun d(message: String, tag: String = "", vararg args: Any) {
+//        innerLog(DEBUG, message, tag, *args)
+//    }
+//
+//    fun e(message: String, tag: String = "", vararg args: Any, throwable: Throwable? = null) {
+//        innerLog(ERROR, message, tag, *args, throwable = throwable)
+//    }
+//
+//    fun w(message: String, tag: String = "", vararg args: Any) {
+//        innerLog(WARN, message, tag, *args)
+//    }
+//
+//    fun i(message: String, tag: String = "", vararg args: Any) {
+//        innerLog(INFO, message, tag, *args)
+//    }
+//
+//    fun v(message: String, tag: String = "", vararg args: Any) {
+//        innerLog(VERBOSE, message, tag, *args)
+//    }
+//
+//    fun wtf(message: String, tag: String = "", vararg args: Any) {
+//        innerLog(ASSERT, message, tag, *args)
+//    }
+
+    fun log(message: Any, priority: Int = VERBOSE, vararg args: Any) {
+        chain.proceed(message, priority, args)
     }
 
-    fun e(message: String, tag: String = "", vararg args: Any, throwable: Throwable? = null) {
-        log(ERROR, message, tag, *args, throwable = throwable)
+    fun tag(tag: String): EasyLog {
+        interceptors.forEach { it.tag = tag }
+        return this
     }
 
-    fun w(message: String, tag: String = "", vararg args: Any) {
-        log(WARN, message, tag, *args)
-    }
-
-    fun i(message: String, tag: String = "", vararg args: Any) {
-        log(INFO, message, tag, *args)
-    }
-
-    fun v(message: String, tag: String = "", vararg args: Any) {
-        log(VERBOSE, message, tag, *args)
-    }
-
-    fun wtf(message: String, tag: String = "", vararg args: Any) {
-        log(ASSERT, message, tag, *args)
-    }
-
-    fun logMessage(message: Any, tag: String, priority: Int = VERBOSE, vararg args: Any) {
-        chain.proceed(message, tag, priority, args)
-    }
-
-    inline fun <reified T> addInterceptor(interceptor: Interceptor<T>) {
+    fun addInterceptor(interceptor: Interceptor<*>) {
         addInterceptor(interceptors.size, interceptor)
     }
 
-    inline fun <reified T> addInterceptor(index: Int, interceptor: Interceptor<T>) {
+    fun addInterceptor(index: Int, interceptor: Interceptor<*>) {
         interceptors.add(index, interceptor)
-        interceptorClasses.add(index, T::class.java)
     }
 
     fun removeInterceptor(interceptor: Interceptor<*>) {
@@ -85,7 +87,7 @@ object EasyLog {
     }
 
     @Synchronized
-    private fun log(
+    private fun innerLog(
         priority: Int,
         message: String,
         tag: String,
@@ -93,7 +95,7 @@ object EasyLog {
         throwable: Throwable? = null
     ) {
         val logMessage = formatLog(message, args, throwable)
-        chain.proceed(logMessage, tag, priority)
+        chain.proceed(logMessage, priority)
     }
 
     private fun formatLog(message: String, args: Array<out Any>, throwable: Throwable?): String {

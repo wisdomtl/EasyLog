@@ -13,7 +13,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class OkioInterceptor private constructor(private var dir: String) : Interceptor<Any> {
+class OkioInterceptor private constructor(private var dir: String) : Interceptor<Any>() {
     private val handlerThread = HandlerThread("log_to_file_thread")
     private val handler: Handler
     private var startTime = System.currentTimeMillis()
@@ -57,16 +57,16 @@ class OkioInterceptor private constructor(private var dir: String) : Interceptor
         handler = Handler(handlerThread.looper, callback)
     }
 
-    override fun log(message: Any, tag: String, priority: Int, chain: Chain, vararg args: Any) {
+    override fun log(message: Any,  priority: Int, chain: Chain, vararg args: Any) {
         // prevent HandlerThread being killed
         if (!handlerThread.isAlive) handlerThread.start()
         handler.run {
             removeMessages(TYPE_FLUSH)
-            obtainMessage(TYPE_LOG, "[$tag] $message").sendToTarget()
+//            obtainMessage(TYPE_LOG, "[$tag] $message").sendToTarget()
             val flushMessage = handler.obtainMessage(TYPE_FLUSH)
             sendMessageDelayed(flushMessage, FLUSH_LOG_DELAY_MILLIS)
         }
-        chain.proceed(message, tag, priority)
+//        chain.proceed(message, tag, priority)
     }
 
     override fun enable(): Boolean {

@@ -5,7 +5,7 @@ import com.taylor.easylog.EasyLog
 import com.taylor.easylog.Interceptor
 import java.lang.StringBuilder
 
-class CallStackInterceptor : Interceptor<Any> {
+class CallStackInterceptor : Interceptor<Any>() {
     companion object {
         private const val HEADER =
             "┌──────────────────────────────────────────────────────────────────────────────────────────────────────"
@@ -19,16 +19,16 @@ class CallStackInterceptor : Interceptor<Any> {
         )
     }
 
-    override fun log(message: Any, tag: String, priority: Int, chain: Chain, vararg args: Any) {
-        chain.proceed(HEADER, tag, priority)
-        chain.proceed("$LEFT_BORDER$message", tag, priority)
+    override fun log(message: Any,  priority: Int, chain: Chain, vararg args: Any) {
+        chain.proceed(HEADER, priority)
+        chain.proceed("$LEFT_BORDER$message", priority)
         getCallStack(blackList).forEach {
             val callStack = StringBuilder()
                 .append(LEFT_BORDER)
                 .append("\t${it}").toString()
-            chain.proceed(callStack, tag, priority)
+            chain.proceed(callStack,priority)
         }
-        chain.proceed(FOOTER, tag, priority)
+        chain.proceed(FOOTER, priority)
     }
 
     override fun enable(): Boolean {

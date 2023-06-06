@@ -1,11 +1,13 @@
 package com.taylor.easylog
 
-interface Interceptor<INPUT> {
+abstract class Interceptor<T> {
+    internal open var tag: String? = null
+
     /**
      * print the log
      * @return whether terminate the responsibility chain
      */
-    fun log(message: INPUT, tag: String, priority: Int, chain: Chain, vararg args: Any)
+    abstract fun log(message: T, priority: Int, chain: Chain, vararg args: Any)
 //
 //    /**
 //     * print the logs
@@ -17,5 +19,5 @@ interface Interceptor<INPUT> {
      * whether apply [log] logic
      * @return true means apply, otherwise false
      */
-    fun enable(): Boolean
+    abstract fun enable(): Boolean
 }

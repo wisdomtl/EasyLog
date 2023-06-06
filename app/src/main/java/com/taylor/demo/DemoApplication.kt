@@ -33,6 +33,9 @@ class DemoApplication : Application() {
          */
         initEasyLog()
         initTaylorSdk()
+        EasyLog.log("i am a android develp",EasyLog.ERROR)
+        EasyLog.tag("telanx").log("i named telanx",EasyLog.ERROR)
+        EasyLog.log("abcdefg",EasyLog.ERROR)
     }
 
     /**
@@ -63,7 +66,7 @@ class DemoApplication : Application() {
     }
     private val sink by lazy {
         object : SinkInterceptor.Sink {
-            override fun output(message: Log, tag: String) {
+            override fun output(message: Log) {
                 mmkv.encode(message.id.toString(), message.toByteArray())
             }
         }
@@ -72,7 +75,7 @@ class DemoApplication : Application() {
 
     private val uploader by lazy {
         object : UploadInterceptor.Uploader {
-            override fun upload(messages: LogBatch, tag: String) {
+            override fun upload(messages: LogBatch) {
 //                scope.launch { trackApi.track(messages) }
                 messages.logList.map { it.id to it.data.unpack(LoadSuccess::class.java) }.print { "${it.first} to ${it.second} and ${it.second.isHitCache}" }.let {
                     android.util.Log.i("ttaylor", "DemoApplication.upload() logBatch=${it}");
@@ -91,11 +94,11 @@ class DemoApplication : Application() {
             addInterceptor(UploadInterceptor(uploader))
         }
         repeat(5) {
-            EasyLog.logMessage(loadSuccess {
+            EasyLog.log(loadSuccess {
                 duration = 100
                 isHitCache = it %2  == 0
                 count = 2
-            }, tag = "ttaylor")
+            })
         }
     }
 }

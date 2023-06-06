@@ -3,10 +3,10 @@ package com.zenmen.easylog_su.interceptor
 import com.taylor.easylog.Chain
 import com.taylor.easylog.Interceptor
 
-class BeautyLogInterceptor : Interceptor<Any> {
-    override fun log(message: Any, tag: String, priority: Int, chain: Chain, vararg args: Any) {
+class BeautyLogInterceptor : Interceptor<Any>() {
+    override fun log(message: Any,  priority: Int, chain: Chain, vararg args: Any) {
         if (enable()) {
-            chain.proceed(message.toString().format(args), tag, priority, args)
+            chain.proceed(message.toString().format(args),priority, args)
         }
     }
 
