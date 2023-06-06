@@ -2,12 +2,13 @@ package com.taylor.easylog
 
 import android.os.Build
 import android.util.Log
+import java.io.PrintWriter
+import java.io.StringWriter
 import java.util.regex.Pattern
 
 open class LogcatInterceptor : Interceptor<Any>() {
     private val onetimeTag = ThreadLocal<String>()
     private val ANONYMOUS_CLASS = Pattern.compile("(\\$\\d+)+$")
-    private val MAX_LOG_LENGTH = 4000
     private val MAX_TAG_LENGTH = 23
     override var tag: String?
         get() = onetimeTag.get()?.also { onetimeTag.remove() }
@@ -23,9 +24,19 @@ open class LogcatInterceptor : Interceptor<Any>() {
     )
 
     override fun log(message: Any, priority: Int, chain: Chain, vararg args: Any) {
-        if (enable()) Log.println(priority, createTag(), message.toString())
+        if (enable()) Log.println(priority, createTag(), getBeautyLog(message, *args))
         chain.proceed(message, priority)
     }
+
+
+    override fun enable(): Boolean = true
+
+    private fun getBeautyLog(message: Any, vararg args:Any) =
+        if (message is Throwable)
+            getStackTraceString(message)
+        else
+            if (args.isNotEmpty()) message.toString().format(args)
+            else message.toString()
 
     private fun createTag(): String? {
         return tag ?: Throwable().stackTrace
@@ -33,8 +44,19 @@ open class LogcatInterceptor : Interceptor<Any>() {
             .let(::createStackElementTag)
     }
 
+    private fun getStackTraceString(t: Throwable): String {
+        // Don't replace this with Log.getStackTraceString() - it hides
+        // UnknownHostException, which is not what we want.
+        val sw = StringWriter(256)
+        val pw = PrintWriter(sw, false)
+        t.printStackTrace(pw)
+        pw.flush()
+        return sw.toString()
+    }
 
-    protected open fun createStackElementTag(element: StackTraceElement): String? {
+    private fun String.format(args: Array<out Any>) = if (args.isEmpty()) this else String.format(this, *args)
+
+    private fun createStackElementTag(element: StackTraceElement): String? {
         var tag = element.className.substringAfterLast('.')
         val m = ANONYMOUS_CLASS.matcher(tag)
         if (m.find()) {
@@ -46,9 +68,5 @@ open class LogcatInterceptor : Interceptor<Any>() {
         } else {
             tag.substring(0, MAX_TAG_LENGTH)
         }
-    }
-
-    override fun enable(): Boolean {
-        return true
     }
 }

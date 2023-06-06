@@ -33,9 +33,11 @@ class DemoApplication : Application() {
          */
         initEasyLog()
         initTaylorSdk()
-        EasyLog.log("i am a android develp",EasyLog.ERROR)
-        EasyLog.tag("telanx").log("i named telanx",EasyLog.ERROR)
-        EasyLog.log("abcdefg",EasyLog.ERROR)
+        EasyLog.log(message = "i am a android develp",priority = EasyLog.ERROR)
+        EasyLog.tag("telanx").log(message ="i named telanx",priority = EasyLog.ERROR)
+        EasyLog.log(message ="abcdefg", priority = EasyLog.ERROR)
+        EasyLog.log(IllegalArgumentException("dfdfdfdfdsfsfdsfdf"),EasyLog.ERROR)
+        EasyLog.log("message %s",EasyLog.ERROR, "sss")
     }
 
     /**

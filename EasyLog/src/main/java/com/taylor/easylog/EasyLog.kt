@@ -65,8 +65,8 @@ object EasyLog {
 //        innerLog(ASSERT, message, tag, *args)
 //    }
 
-    fun log(message: Any, priority: Int = VERBOSE, vararg args: Any) {
-        chain.proceed(message, priority, args)
+    fun log(message: Any,priority: Int = VERBOSE, vararg args: Any ) {
+        chain.proceed(message, priority, *args)
     }
 
     fun tag(tag: String): EasyLog {
@@ -106,8 +106,6 @@ object EasyLog {
         return logMessage
     }
 
-    private fun String.format(vararg args: Any) =
-        if (args.isNullOrEmpty()) this else String.format(this, *args)
 
     private fun getStackTraceString(tr: Throwable?): String {
         if (tr == null) {
