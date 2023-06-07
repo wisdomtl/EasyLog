@@ -5,6 +5,9 @@ import com.taylor.easylog.Interceptor
 import java.io.PrintWriter
 import java.io.StringWriter
 
+/**
+ * An [Interceptor] formatting log by args
+ */
 open class FormatInterceptor : Interceptor<Any>() {
 
     override fun log(tag: String, message: Any, priority: Int, chain: Chain, vararg args: Any) {
