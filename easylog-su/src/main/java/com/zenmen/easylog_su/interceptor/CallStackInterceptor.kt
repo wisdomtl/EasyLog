@@ -3,6 +3,7 @@ package com.zenmen.easylog_su.interceptor
 import com.taylor.easylog.Chain
 import com.taylor.easylog.EasyLog
 import com.taylor.easylog.Interceptor
+import com.taylor.easylog.getCallStack
 import java.lang.StringBuilder
 
 class CallStackInterceptor : Interceptor<Any>() {

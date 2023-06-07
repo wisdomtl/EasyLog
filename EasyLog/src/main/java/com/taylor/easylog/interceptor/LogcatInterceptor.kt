@@ -1,6 +1,8 @@
-package com.taylor.easylog
+package com.taylor.easylog.interceptor
 
 import android.util.Log
+import com.taylor.easylog.Chain
+import com.taylor.easylog.Interceptor
 
 class LogcatInterceptor : Interceptor<Any>() {
     override fun log(tag: String, message: Any, priority: Int, chain: Chain, vararg args: Any) {

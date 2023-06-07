@@ -1,8 +1,8 @@
 package com.zenmen.easylog_su
 
 import com.taylor.easylog.EasyLog
-import com.taylor.easylog.FormatInterceptor
-import com.taylor.easylog.LogcatInterceptor
+import com.taylor.easylog.interceptor.FormatInterceptor
+import com.taylor.easylog.interceptor.LogcatInterceptor
 import com.zenmen.easylog_su.interceptor.BatchInterceptor
 import com.zenmen.easylog_su.interceptor.LinearInterceptor
 import com.zenmen.easylog_su.interceptor.LogWrapperInterceptor

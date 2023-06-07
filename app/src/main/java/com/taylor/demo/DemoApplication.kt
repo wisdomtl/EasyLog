@@ -5,14 +5,9 @@ import com.taylor.demo.api.TrackApi
 import com.taylor.demo.protobuf.gen.AdLog.LoadSuccess
 import com.taylor.demo.protobuf.gen.loadSuccess
 import com.taylor.easylog.EasyLog
-import com.taylor.easylog.FormatInterceptor
-import com.taylor.easylog.LogcatInterceptor
 import com.tencent.mmkv.MMKV
 
-import com.zenmen.easylog_su.interceptor.BatchInterceptor
 import com.zenmen.easylog_su.interceptor.FrameInterceptor
-import com.zenmen.easylog_su.interceptor.LinearInterceptor
-import com.zenmen.easylog_su.interceptor.LogWrapperInterceptor
 import com.zenmen.easylog_su.interceptor.SinkInterceptor
 import com.zenmen.easylog_su.interceptor.UploadInterceptor
 import com.zenmen.easylog_su.proto.gen.LogOuterClass.Log
@@ -47,6 +42,13 @@ class DemoApplication : Application() {
         }
         EasyLog.interceptor(FrameInterceptor()).log("this is onetime interceptor")
         EasyLog.log("after one time interceptor")
+        val list = listOf(
+            Data(1, true),
+            Data(2, true),
+            Data(3, false),
+        )
+        EasyLog.list(list){ "${it.a} + ${it.b}"}
+        EasyLog.log("after list printed")
     }
 
     /**
@@ -106,6 +108,8 @@ class DemoApplication : Application() {
         }
     }
 }
+
+data class Data(val a: Int, val b: Boolean)
 
 /**
  * print collection bean in which you interested defined by [map]
