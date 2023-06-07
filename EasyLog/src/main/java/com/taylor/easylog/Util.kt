@@ -14,11 +14,7 @@ fun getCallStack(blackList: List<String>): List<String> {
 /**
  * Print [Iterable] POJO in which you interested defined by [map]
  */
-fun <T> Iterable<T>.log(map: (T) -> String) =
-    StringBuilder("[").also { sb ->
-        this.forEach { e -> sb.append("\t${map(e)},") }
-        sb.append("]")
-    }.toString()
+fun <T> Iterable<T>.log(map: (T) -> String) = fold(StringBuilder("[")) { acc: StringBuilder, t: T -> acc.append("\t${map(t)},") }.append("]").toString()
 
 
 /**
