@@ -28,9 +28,11 @@ open class LogcatInterceptor : Interceptor<Any>() {
         chain.proceed(message, priority)
     }
 
-
     override fun enable(): Boolean = true
 
+    /**
+     * Print [message] with call stack or formatted by [args]
+     */
     private fun getBeautyLog(message: Any, vararg args:Any) =
         if (message is Throwable)
             getStackTraceString(message)
@@ -38,6 +40,9 @@ open class LogcatInterceptor : Interceptor<Any>() {
             if (args.isNotEmpty()) message.toString().format(args)
             else message.toString()
 
+    /**
+     * Create one-time tag for log, which may be set by [EasyLog.tag] or auto-generate with the host class name
+     */
     private fun createTag(): String? {
         return tag ?: Throwable().stackTrace
             .first { it.className !in blackList }
