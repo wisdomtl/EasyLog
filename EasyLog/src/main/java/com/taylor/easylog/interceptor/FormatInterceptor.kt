@@ -8,7 +8,7 @@ import java.io.StringWriter
 /**
  * An [Interceptor] formatting log by args
  */
-open class FormatInterceptor : Interceptor<Any>() {
+open class FormatInterceptor : Interceptor<Any> {
 
     override fun log(tag: String, message: Any, priority: Int, chain: Chain, vararg args: Any) {
         if (enable()) chain.proceed(tag, getFormatLog(message, *args), priority, *args)

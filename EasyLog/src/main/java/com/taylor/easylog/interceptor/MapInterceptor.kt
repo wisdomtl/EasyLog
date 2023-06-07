@@ -7,7 +7,7 @@ import com.taylor.easylog.log
 /**
  * An [Interceptor] for print [Map]
  */
-class MapInterceptor<K, V> : Interceptor<Map<K, V>>() {
+class MapInterceptor<K, V> : Interceptor<Map<K, V>> {
     override fun log(tag: String, message: Map<K, V>, priority: Int, chain: Chain, vararg args: Any) {
         if (enable()) chain.proceed(tag, message.log(4), priority, args)
         else chain.proceed(tag, message, priority, args)

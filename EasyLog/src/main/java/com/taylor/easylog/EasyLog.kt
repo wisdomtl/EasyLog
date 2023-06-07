@@ -111,7 +111,7 @@ object EasyLog {
      * Add one time tag for the next logging
      */
     fun tag(tag: String): EasyLog {
-        interceptors.forEach { it.tag = tag }
+        this.tag = tag
         return this
     }
 

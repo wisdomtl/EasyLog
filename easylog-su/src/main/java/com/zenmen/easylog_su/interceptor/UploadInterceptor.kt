@@ -4,7 +4,7 @@ import com.taylor.easylog.Chain
 import com.taylor.easylog.Interceptor
 import com.zenmen.easylog_su.proto.gen.LogOuterClass.LogBatch
 
-class UploadInterceptor(private val uploader: Uploader?) : Interceptor<LogBatch>() {
+class UploadInterceptor(private val uploader: Uploader?) : Interceptor<LogBatch> {
 
     override fun log(tag: String, message: LogBatch, priority: Int, chain: Chain, vararg args: Any) {
         if (enable()) uploader?.upload(message )
