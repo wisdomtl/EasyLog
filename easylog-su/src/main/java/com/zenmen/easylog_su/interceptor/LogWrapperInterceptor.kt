@@ -14,12 +14,12 @@ class LogWrapperInterceptor : Interceptor<Message>() {
     private val nanoTimestamp: Long
         get() = date.time * 1000_000 + System.nanoTime() % 1000_000
 
-    override fun log(message: Message, priority: Int, chain: Chain, vararg args: kotlin.Any) {
+    override fun log(tag: String, message: Message, priority: Int, chain: Chain, vararg args: kotlin.Any) {
         val log = log {
             id = nanoTimestamp
             data = Any.pack(message)
         }
-        chain.proceed(log, priority)
+        chain.proceed(tag,log, priority)
     }
 
     override fun enable(): Boolean = true

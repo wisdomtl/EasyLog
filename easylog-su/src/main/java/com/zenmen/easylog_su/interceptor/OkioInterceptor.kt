@@ -57,7 +57,7 @@ class OkioInterceptor private constructor(private var dir: String) : Interceptor
         handler = Handler(handlerThread.looper, callback)
     }
 
-    override fun log(message: Any,  priority: Int, chain: Chain, vararg args: Any) {
+    override fun log(tag: String, message: Any,  priority: Int, chain: Chain, vararg args: Any) {
         // prevent HandlerThread being killed
         if (!handlerThread.isAlive) handlerThread.start()
         handler.run {

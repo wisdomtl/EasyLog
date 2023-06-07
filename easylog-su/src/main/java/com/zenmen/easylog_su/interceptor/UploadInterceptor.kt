@@ -6,7 +6,7 @@ import com.zenmen.easylog_su.proto.gen.LogOuterClass.LogBatch
 
 class UploadInterceptor(private val uploader: Uploader?) : Interceptor<LogBatch>() {
 
-    override fun log(message: LogBatch, priority: Int, chain: Chain, vararg args: Any) {
+    override fun log(tag: String, message: LogBatch, priority: Int, chain: Chain, vararg args: Any) {
         if (enable()) uploader?.upload(message )
     }
 

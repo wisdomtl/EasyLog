@@ -14,17 +14,17 @@ class BatchInterceptor(private val size: Int, private val duration: Long) : Inte
     private val list = mutableListOf<Log>()
     private var lastTime = 0L
 
-    override fun log(message: Log,  priority: Int, chain: Chain, vararg args: Any) {
+    override fun log(tag: String, message: Log,  priority: Int, chain: Chain, vararg args: Any) {
         if (enable()) {
             list.add(message)
             if (lastTime != 0L && SystemClock.elapsedRealtime() - lastTime >= duration || list.size >= size) {
                 val logBatch = list.fold(LogBatch.newBuilder()) { acc: LogBatch.Builder, log: Log -> acc.addLog(log) }.build()
-                chain.proceed(logBatch, priority)
+                chain.proceed(tag,logBatch, priority)
                 list.clear()
                 lastTime = SystemClock.elapsedRealtime()
             }
         } else {
-            chain.proceed(message,  priority)
+            chain.proceed(tag,message,  priority)
         }
     }
 

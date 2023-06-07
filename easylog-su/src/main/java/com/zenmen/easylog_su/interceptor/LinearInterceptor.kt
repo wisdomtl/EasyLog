@@ -22,21 +22,20 @@ class LinearInterceptor : Interceptor<Any>() {
     init {
         scope.launch {
             channel.consumeEach { event ->
-                event.apply { chain.proceed(message, priority) }
+                event.apply { chain.proceed(tag, message, priority) }
             }
         }
     }
 
-    override fun log(message: Any,  priority: Int, chain: Chain, vararg args: Any) {
+    override fun log(tag: String, message: Any, priority: Int, chain: Chain, vararg args: Any) {
         if (enable()) {
-            scope.launch { channel.send(Event(message,  priority, chain)) }
+            scope.launch { channel.send(Event(tag, message, priority, chain)) }
         } else {
-            chain.proceed(message, priority)
+            chain.proceed(tag, message, priority)
         }
     }
 
-
     override fun enable(): Boolean = true
 
-    data class Event(val message: Any,  val priority: Int, val chain: Chain)
+    data class Event(val tag: String, val message: Any, val priority: Int, val chain: Chain)
 }

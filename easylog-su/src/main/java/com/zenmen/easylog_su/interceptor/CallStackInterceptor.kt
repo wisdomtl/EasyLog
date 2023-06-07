@@ -19,16 +19,16 @@ class CallStackInterceptor : Interceptor<Any>() {
         )
     }
 
-    override fun log(message: Any,  priority: Int, chain: Chain, vararg args: Any) {
-        chain.proceed(HEADER, priority)
-        chain.proceed("$LEFT_BORDER$message", priority)
+    override fun log(tag: String, message: Any,  priority: Int, chain: Chain, vararg args: Any) {
+        chain.proceed(tag,HEADER, priority)
+        chain.proceed(tag,"$LEFT_BORDER$message", priority)
         getCallStack(blackList).forEach {
             val callStack = StringBuilder()
                 .append(LEFT_BORDER)
                 .append("\t${it}").toString()
-            chain.proceed(callStack,priority)
+            chain.proceed(tag,callStack,priority)
         }
-        chain.proceed(FOOTER, priority)
+        chain.proceed(tag,FOOTER, priority)
     }
 
     override fun enable(): Boolean {

@@ -7,13 +7,8 @@ abstract class Interceptor<T> {
      * print the log
      * @return whether terminate the responsibility chain
      */
-    abstract fun log(message: T, priority: Int, chain: Chain, vararg args: Any)
-//
-//    /**
-//     * print the logs
-//     * @return whether terminate the responsibility chain
-//     */
-//    fun logBatch(vararg messages: INPUT, tag: String, priority: Int, chain: Chain) {}
+    abstract fun log(tag: String, message: T, priority: Int, chain: Chain, vararg args: Any)
+
 
     /**
      * whether apply [log] logic

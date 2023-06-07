@@ -5,10 +5,12 @@ import com.taylor.demo.api.TrackApi
 import com.taylor.demo.protobuf.gen.AdLog.LoadSuccess
 import com.taylor.demo.protobuf.gen.loadSuccess
 import com.taylor.easylog.EasyLog
+import com.taylor.easylog.FormatInterceptor
 import com.taylor.easylog.LogcatInterceptor
 import com.tencent.mmkv.MMKV
 
 import com.zenmen.easylog_su.interceptor.BatchInterceptor
+import com.zenmen.easylog_su.interceptor.FrameInterceptor
 import com.zenmen.easylog_su.interceptor.LinearInterceptor
 import com.zenmen.easylog_su.interceptor.LogWrapperInterceptor
 import com.zenmen.easylog_su.interceptor.SinkInterceptor
@@ -17,6 +19,7 @@ import com.zenmen.easylog_su.proto.gen.LogOuterClass.Log
 import com.zenmen.easylog_su.proto.gen.LogOuterClass.LogBatch
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.protobuf.ProtoConverterFactory
@@ -33,11 +36,16 @@ class DemoApplication : Application() {
          */
         initEasyLog()
         initTaylorSdk()
-        EasyLog.log(message = "i am a android develp",priority = EasyLog.ERROR)
-        EasyLog.tag("telanx").log(message ="i named telanx",priority = EasyLog.ERROR)
-        EasyLog.log(message ="abcdefg", priority = EasyLog.ERROR)
-        EasyLog.log(IllegalArgumentException("dfdfdfdfdsfsfdsfdf"),EasyLog.ERROR)
-        EasyLog.log("message %s",EasyLog.ERROR, "sss")
+        EasyLog.log(message = "i am a android develp", priority = EasyLog.ERROR)
+        EasyLog.tag("telanx").log(message = "i named telanx", priority = EasyLog.ERROR)
+        EasyLog.log(message = "abcdefg", priority = EasyLog.ERROR)
+        EasyLog.log(IllegalArgumentException("dfdfdfdfdsfsfdsfdf"), EasyLog.ERROR)
+        EasyLog.log("message %s", EasyLog.ERROR, "sss")
+        scope.launch(Dispatchers.IO) {
+            repeat(1000) { EasyLog.log("counting $it") }
+        }
+        EasyLog.interceptor(FrameInterceptor()).log("this is onetime interceptor")
+        EasyLog.log("after one time interceptor")
     }
 
     /**
@@ -80,7 +88,7 @@ class DemoApplication : Application() {
             override fun upload(messages: LogBatch) {
 //                scope.launch { trackApi.track(messages) }
                 messages.logList.map { it.id to it.data.unpack(LoadSuccess::class.java) }.print { "${it.first} to ${it.second} and ${it.second.isHitCache}" }.let {
-                    android.util.Log.i("ttaylor", "DemoApplication.upload() logBatch=${it}");
+//                    android.util.Log.i("ttaylor", "DemoApplication.upload() logBatch=${it}");
                 }
             }
         }
@@ -88,6 +96,7 @@ class DemoApplication : Application() {
 
     private fun initEasyLog() {
         EasyLog.apply {
+            addInterceptor(FormatInterceptor())
             addInterceptor(LogcatInterceptor())
             addInterceptor(LinearInterceptor())
             addInterceptor(LogWrapperInterceptor())
@@ -98,7 +107,7 @@ class DemoApplication : Application() {
         repeat(5) {
             EasyLog.log(loadSuccess {
                 duration = 100
-                isHitCache = it %2  == 0
+                isHitCache = it % 2 == 0
                 count = 2
             })
         }

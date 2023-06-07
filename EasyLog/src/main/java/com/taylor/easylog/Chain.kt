@@ -6,10 +6,10 @@ class Chain(
     private val index: Int = 0
 ) {
 
-    fun proceed(message: Any, priority: Int, vararg args: Any) {
+    fun proceed(tag: String, message: Any, priority: Int, vararg args: Any) {
         val next = Chain(interceptors, index + 1)// new Chain every time to avoid multi-thread problem(index is val)
         try {
-            (interceptors.getOrNull(index) as? Interceptor<Any>)?.log(message, priority, next,*args)
+            (interceptors.getOrNull(index) as? Interceptor<Any>)?.log(tag, message, priority, next, *args)
         } catch (e: Exception) {
             // todo find another interceptor
         }
