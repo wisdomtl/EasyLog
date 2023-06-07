@@ -6,7 +6,9 @@ import com.taylor.easylog.Interceptor
 import com.zenmen.easylog_su.proto.gen.LogOuterClass.Log
 import com.zenmen.easylog_su.proto.gen.LogOuterClass.LogBatch
 
-
+/**
+ * An [Interceptor] batch [Log] into [LogBatch]
+ */
 class BatchInterceptor(private val size: Int, private val duration: Long) : Interceptor<Log>() {
     /**
      * A list for counting event

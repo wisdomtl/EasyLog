@@ -9,6 +9,9 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
 
+/**
+ * An [Interceptor] make log in sequence, free of multi-thread problem
+ */
 class LinearInterceptor : Interceptor<Any>() {
 
     private val CHANNEL_CAPACITY = 50

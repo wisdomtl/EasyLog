@@ -1,6 +1,9 @@
 package com.taylor.easylog
 
 
+/**
+ * A Chain of responsibility for process log
+ */
 class Chain(
     private val interceptors: List<Interceptor<in Nothing>>,
     private val index: Int = 0
