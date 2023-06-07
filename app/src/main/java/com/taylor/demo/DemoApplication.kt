@@ -17,6 +17,7 @@ import com.zenmen.easylog_su.interceptor.SinkInterceptor
 import com.zenmen.easylog_su.interceptor.UploadInterceptor
 import com.zenmen.easylog_su.proto.gen.LogOuterClass.Log
 import com.zenmen.easylog_su.proto.gen.LogOuterClass.LogBatch
+import com.zenmen.easylog_su.simpleInit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -95,15 +96,7 @@ class DemoApplication : Application() {
     }
 
     private fun initEasyLog() {
-        EasyLog.apply {
-            addInterceptor(FormatInterceptor())
-            addInterceptor(LogcatInterceptor())
-            addInterceptor(LinearInterceptor())
-            addInterceptor(LogWrapperInterceptor())
-            addInterceptor(SinkInterceptor(sink))
-            addInterceptor(BatchInterceptor(5, 10_000))
-            addInterceptor(UploadInterceptor(uploader))
-        }
+        EasyLog.simpleInit(5, 10_000, sink, uploader)
         repeat(5) {
             EasyLog.log(loadSuccess {
                 duration = 100
