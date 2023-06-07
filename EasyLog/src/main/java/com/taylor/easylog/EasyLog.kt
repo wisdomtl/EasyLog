@@ -3,6 +3,7 @@ package com.taylor.easylog
 import android.os.Build
 import com.taylor.easylog.interceptor.FormatInterceptor
 import com.taylor.easylog.interceptor.ListInterceptor
+import com.taylor.easylog.interceptor.MapInterceptor
 import java.util.regex.Pattern
 
 
@@ -44,6 +45,7 @@ object EasyLog {
 
     private val interceptors = mutableListOf<Interceptor<in Nothing>>()
     private val chain = Chain(interceptors)
+
     /**
      * A transient [Interceptor] only for next logging
      */
@@ -84,9 +86,23 @@ object EasyLog {
 
     /**
      * The entry point for logging [Iterable]
+     * @param message the Iterator to log
+     * @param priority the log level in logcat
+     * @param map define what to log of <T>
      */
     fun <T> list(message: Iterable<T>, priority: Int = VERBOSE, map: ((T) -> String)? = null) {
         interceptor(ListInterceptor(map))
+        chain.proceed(createTag(), message, priority)
+        onetimeInterceptor?.takeIf { it.get() != null }?.also { removeInterceptor(it.get()) } // remove one time interceptor
+    }
+
+    /**
+     * The entry point for logging [Map]
+     * @param message the Iterator to log
+     * @param priority the log level in logcat
+     */
+    fun <K, V> map(message: Map<K, V>, priority: Int = VERBOSE) {
+        interceptor(MapInterceptor<K, V>())
         chain.proceed(createTag(), message, priority)
         onetimeInterceptor?.takeIf { it.get() != null }?.also { removeInterceptor(it.get()) } // remove one time interceptor
     }

@@ -47,8 +47,11 @@ class DemoApplication : Application() {
             Data(2, true),
             Data(3, false),
         )
-        EasyLog.list(list){ "${it.a} + ${it.b}"}
+        EasyLog.list(list) { "${it.a} + ${it.b}" }
         EasyLog.log("after list printed")
+        EasyLog.map(mapOf("abd" to 11, "ddd" to 2))
+        EasyLog.map(mapOf("abd" to mapOf( 1  to 2, 3 to 4), "abd" to mapOf( 44  to 2, 33 to 4)))
+
     }
 
     /**
