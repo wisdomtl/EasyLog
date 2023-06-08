@@ -42,6 +42,8 @@ The origin log are classified and each has it own processing logic.
 
 The log processing logic is like a Flexible production line. By EasyLog, it is easy to customize your own Flexible production line.
 
+EasyLog is designed with chain of responsibility, each log processing logic is abstracted as an`Interceptor<T>`. The Interceptors are not standalone, they are chained with each other. It means the output of previous Interceptor is the input of the next one.
+
 ## 1. Initialization
 ```kotlin
 EasyLog.addInterceptor(LogcatInterceptor()) // add logcat intercepter
