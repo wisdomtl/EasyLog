@@ -28,7 +28,11 @@ Different business scenarios may select and combine some of these logging option
 
 Easylog allows you to freely combine your logging processing logic in any order.
 
+Let's say, you have the following log processing process：
+
 ![pic](https://github.com/wisdomtl/EasyLog/blob/master/WX20230608-144439%402x.png)
+
+The origin log is divied into two process flow.
 
 ## 1. Initialization
 ```kotlin
