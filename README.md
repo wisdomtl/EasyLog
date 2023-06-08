@@ -28,6 +28,8 @@ Different business scenarios may select and combine some of these logging option
 
 Easylog allows you to freely combine your logging processing logic in any order.
 
+![pic](https://github.com/wisdomtl/EasyLog/blob/master/WX20230608-144439%402x.png)
+
 ## 1. Initialization
 ```kotlin
 EasyLog.addInterceptor(LogcatInterceptor()) // add logcat intercepter
