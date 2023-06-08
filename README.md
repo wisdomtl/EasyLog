@@ -38,7 +38,9 @@ Or, another log processing process:
 
 ![pic2](https://github.com/wisdomtl/EasyLog/blob/master/WX20230608-145451%402x.png)
 
-The origi log are classified and each has it own processing logic.
+The origin log are classified and each has it own processing logic.
+
+The log processing logic is like a Flexible production line. By EasyLog, it is easy to customize your own Flexible production line.
 
 ## 1. Initialization
 ```kotlin
