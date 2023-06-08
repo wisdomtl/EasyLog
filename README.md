@@ -34,6 +34,12 @@ Let's say, you have the following log processing process：
 
 The origin log is divied into two process flow.
 
+Or, another log processing process:
+
+![pic2](https://github.com/wisdomtl/EasyLog/blob/master/WX20230608-145451%402x.png)
+
+The origi log are classified and each has it own processing logic.
+
 ## 1. Initialization
 ```kotlin
 EasyLog.addInterceptor(LogcatInterceptor()) // add logcat intercepter
