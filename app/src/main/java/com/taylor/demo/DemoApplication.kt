@@ -1,17 +1,16 @@
 package com.taylor.demo
 
 import android.app.Application
+import android.util.Log
+import com.google.protobuf.MessageLite
 import com.taylor.demo.api.TrackApi
-import com.taylor.demo.protobuf.gen.AdLog.LoadSuccess
 import com.taylor.demo.protobuf.gen.loadSuccess
 import com.taylor.easylog.EasyLog
 import com.tencent.mmkv.MMKV
-
 import com.zenmen.easylog_su.interceptor.FrameInterceptor
-import com.zenmen.easylog_su.interceptor.SinkInterceptor
 import com.zenmen.easylog_su.interceptor.UploadInterceptor
-import com.zenmen.easylog_su.proto.gen.LogOuterClass.Log
-import com.zenmen.easylog_su.proto.gen.LogOuterClass.LogBatch
+import com.zenmen.easylog_su.model.Converter
+import com.zenmen.easylog_su.model.LogBatch
 import com.zenmen.easylog_su.simpleInit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -50,7 +49,7 @@ class DemoApplication : Application() {
         EasyLog.list(list) { "${it.a} + ${it.b}" }
         EasyLog.log("after list printed")
         EasyLog.map(mapOf("abd" to 11, "ddd" to 2))
-        EasyLog.map(mapOf("abd" to mapOf( 1  to 2, 3 to 4), "abd" to mapOf( 44  to 2, 33 to 4)))
+        EasyLog.map(mapOf("abd" to mapOf(1 to 2, 3 to 4), "abd" to mapOf(44 to 2, 33 to 4)))
 
     }
 
@@ -58,7 +57,7 @@ class DemoApplication : Application() {
      * init another module
      */
     private fun initTaylorSdk() {
-//        TaylorSdk()
+        //        TaylorSdk()
     }
 
     val okHttpClient by lazy {
@@ -80,36 +79,43 @@ class DemoApplication : Application() {
     private val mmkv by lazy {
         MMKV.defaultMMKV()
     }
-    private val sink by lazy {
-        object : SinkInterceptor.Sink {
-            override fun output(message: Log) {
-                mmkv.encode(message.id.toString(), message.toByteArray())
-            }
-        }
-    }
+
     private val scope = CoroutineScope(Dispatchers.IO)
 
     private val uploader by lazy {
         object : UploadInterceptor.Uploader {
             override fun upload(messages: LogBatch) {
-//                scope.launch { trackApi.track(messages) }
-                messages.logList.map { it.id to it.data.unpack(LoadSuccess::class.java) }.print { "${it.first} to ${it.second} and ${it.second.isHitCache}" }.let {
-//                    android.util.Log.i("ttaylor", "DemoApplication.upload() logBatch=${it}");
-                }
+                messages.logs.print { it. }
+                Log.d("ttaylor", "DemoApplication.upload[messages]: ")
+                //                scope.launch { trackApi.track(messages) }
+                //                messages.logList.map { it.id to it.data.unpack(LoadSuccess::class.java) }.print { "${it.first} to ${it.second} and ${it.second.isHitCache}" }.let {
+                //                    android.util.Log.i("ttaylor", "DemoApplication.upload() logBatch=${it}");
             }
         }
     }
 
+    private var mCount = 0;
+
     private fun initEasyLog() {
-        EasyLog.simpleInit(5, 10_000, sink, uploader)
+        EasyLog.simpleInit(5, 10_000, uploader)
         repeat(5) {
             EasyLog.log(loadSuccess {
                 duration = 100
                 isHitCache = it % 2 == 0
-                count = 2
-            })
+                count = mCount++
+            }.convertToByteArray())
         }
     }
+}
+
+class MessageLiteConverter(private val messageLite: MessageLite) : Converter {
+    override fun pack(): ByteArray {
+        return messageLite.toByteArray()
+    }
+}
+
+fun MessageLite.convertToByteArray(): Converter {
+    return MessageLiteConverter(this)
 }
 
 data class Data(val a: Int, val b: Boolean)

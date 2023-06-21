@@ -43,6 +43,7 @@ dependencies {
     api 'com.google.protobuf:protobuf-kotlin:3.21.12'
     implementation("com.squareup.okio:okio:3.0.0")
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+    implementation 'com.tencent:mmkv:1.2.16'
     api project(':EasyLog')
 
 }

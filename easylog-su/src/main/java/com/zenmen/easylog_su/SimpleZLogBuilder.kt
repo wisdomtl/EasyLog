@@ -5,7 +5,7 @@ import com.taylor.easylog.interceptor.FormatInterceptor
 import com.taylor.easylog.interceptor.LogcatInterceptor
 import com.zenmen.easylog_su.interceptor.BatchInterceptor
 import com.zenmen.easylog_su.interceptor.LinearInterceptor
-import com.zenmen.easylog_su.interceptor.LogWrapperInterceptor
+import com.zenmen.easylog_su.interceptor.LogInterceptor
 import com.zenmen.easylog_su.interceptor.SinkInterceptor
 import com.zenmen.easylog_su.interceptor.UploadInterceptor
 
@@ -17,13 +17,13 @@ import com.zenmen.easylog_su.interceptor.UploadInterceptor
  * 4. be stored is sdcard
  * 5. be batched to upload
  */
-fun EasyLog.simpleInit(size: Int, duration: Long, sink: SinkInterceptor.Sink, uploader: UploadInterceptor.Uploader) {
+fun EasyLog.simpleInit(size: Int, duration: Long,uploader: UploadInterceptor.Uploader) {
     EasyLog.apply {
         addInterceptor(FormatInterceptor())
         addInterceptor(LogcatInterceptor())
         addInterceptor(LinearInterceptor())
-        addInterceptor(LogWrapperInterceptor())
-        addInterceptor(SinkInterceptor(sink))
+        addInterceptor(LogInterceptor())
+        addInterceptor(SinkInterceptor())
         addInterceptor(BatchInterceptor(size, duration))
         addInterceptor(UploadInterceptor(uploader))
     }

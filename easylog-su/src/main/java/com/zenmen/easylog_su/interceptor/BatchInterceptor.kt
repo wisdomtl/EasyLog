@@ -3,8 +3,8 @@ package com.zenmen.easylog_su.interceptor
 import android.os.SystemClock
 import com.taylor.easylog.Chain
 import com.taylor.easylog.Interceptor
-import com.zenmen.easylog_su.proto.gen.LogOuterClass.Log
-import com.zenmen.easylog_su.proto.gen.LogOuterClass.LogBatch
+import com.zenmen.easylog_su.model.Log
+import com.zenmen.easylog_su.model.LogBatch
 
 /**
  * An [Interceptor] batch [Log] into [LogBatch]
@@ -20,7 +20,7 @@ class BatchInterceptor(private val size: Int, private val duration: Long) : Inte
         if (enable()) {
             list.add(message)
             if (lastTime != 0L && SystemClock.elapsedRealtime() - lastTime >= duration || list.size >= size) {
-                val logBatch = list.fold(LogBatch.newBuilder()) { acc: LogBatch.Builder, log: Log -> acc.addLog(log) }.build()
+                val logBatch = list.fold(LogBatch.Builder()) { acc: LogBatch.Builder, log: Log -> acc.addLog(log) }.build()
                 chain.proceed(tag,logBatch, priority)
                 list.clear()
                 lastTime = SystemClock.elapsedRealtime()

@@ -2,7 +2,7 @@ package com.zenmen.easylog_su.interceptor
 
 import com.taylor.easylog.Chain
 import com.taylor.easylog.Interceptor
-import com.zenmen.easylog_su.proto.gen.LogOuterClass.LogBatch
+import com.zenmen.easylog_su.model.LogBatch
 
 class UploadInterceptor(private val uploader: Uploader?) : Interceptor<LogBatch> {
 
