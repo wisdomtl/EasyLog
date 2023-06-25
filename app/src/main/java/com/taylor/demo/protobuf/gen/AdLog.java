@@ -58,11 +58,6 @@ public final class AdLog {
       return new LoadSuccess();
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return com.taylor.demo.protobuf.gen.AdLog.internal_static_com_taylor_demo_protobuf_gen_LoadSuccess_descriptor;
@@ -241,11 +236,13 @@ public final class AdLog {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
+
     public static com.taylor.demo.protobuf.gen.AdLog.LoadSuccess parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
+
     public static com.taylor.demo.protobuf.gen.AdLog.LoadSuccess parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -494,7 +491,7 @@ public final class AdLog {
        * @return This builder for chaining.
        */
       public Builder setDuration(int value) {
-        
+
         duration_ = value;
         bitField0_ |= 0x00000001;
         onChanged();
@@ -526,7 +523,7 @@ public final class AdLog {
        * @return This builder for chaining.
        */
       public Builder setCount(int value) {
-        
+
         count_ = value;
         bitField0_ |= 0x00000002;
         onChanged();
@@ -558,7 +555,7 @@ public final class AdLog {
        * @return This builder for chaining.
        */
       public Builder setIsHitCache(boolean value) {
-        
+
         isHitCache_ = value;
         bitField0_ |= 0x00000004;
         onChanged();
@@ -683,11 +680,6 @@ public final class AdLog {
       return new LoadFail();
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return com.taylor.demo.protobuf.gen.AdLog.internal_static_com_taylor_demo_protobuf_gen_LoadFail_descriptor;
@@ -870,11 +862,13 @@ public final class AdLog {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
+
     public static com.taylor.demo.protobuf.gen.AdLog.LoadFail parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
+
     public static com.taylor.demo.protobuf.gen.AdLog.LoadFail parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1185,7 +1179,7 @@ public final class AdLog {
        * @return This builder for chaining.
        */
       public Builder setCode(int value) {
-        
+
         code_ = value;
         bitField0_ |= 0x00000002;
         onChanged();
@@ -1270,36 +1264,19 @@ public final class AdLog {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>.com.taylor.demo.protobuf.gen.LoadSuccess loadSuccess = 1;</code>
-     * @return Whether the loadSuccess field is set.
+     * <code>.google.protobuf.Any event = 1;</code>
+     * @return Whether the event field is set.
      */
-    boolean hasLoadSuccess();
+    boolean hasEvent();
     /**
-     * <code>.com.taylor.demo.protobuf.gen.LoadSuccess loadSuccess = 1;</code>
-     * @return The loadSuccess.
+     * <code>.google.protobuf.Any event = 1;</code>
+     * @return The event.
      */
-    com.taylor.demo.protobuf.gen.AdLog.LoadSuccess getLoadSuccess();
+    com.google.protobuf.Any getEvent();
     /**
-     * <code>.com.taylor.demo.protobuf.gen.LoadSuccess loadSuccess = 1;</code>
+     * <code>.google.protobuf.Any event = 1;</code>
      */
-    com.taylor.demo.protobuf.gen.AdLog.LoadSuccessOrBuilder getLoadSuccessOrBuilder();
-
-    /**
-     * <code>.com.taylor.demo.protobuf.gen.LoadFail loadFail = 2;</code>
-     * @return Whether the loadFail field is set.
-     */
-    boolean hasLoadFail();
-    /**
-     * <code>.com.taylor.demo.protobuf.gen.LoadFail loadFail = 2;</code>
-     * @return The loadFail.
-     */
-    com.taylor.demo.protobuf.gen.AdLog.LoadFail getLoadFail();
-    /**
-     * <code>.com.taylor.demo.protobuf.gen.LoadFail loadFail = 2;</code>
-     */
-    com.taylor.demo.protobuf.gen.AdLog.LoadFailOrBuilder getLoadFailOrBuilder();
-
-    public com.taylor.demo.protobuf.gen.AdLog.Event.EventCase getEventCase();
+    com.google.protobuf.AnyOrBuilder getEventOrBuilder();
   }
   /**
    * Protobuf type {@code com.taylor.demo.protobuf.gen.Event}
@@ -1323,11 +1300,6 @@ public final class AdLog {
       return new Event();
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return com.taylor.demo.protobuf.gen.AdLog.internal_static_com_taylor_demo_protobuf_gen_Event_descriptor;
@@ -1341,107 +1313,30 @@ public final class AdLog {
               com.taylor.demo.protobuf.gen.AdLog.Event.class, com.taylor.demo.protobuf.gen.AdLog.Event.Builder.class);
     }
 
-    private int eventCase_ = 0;
-    private java.lang.Object event_;
-    public enum EventCase
-        implements com.google.protobuf.Internal.EnumLite,
-            com.google.protobuf.AbstractMessage.InternalOneOfEnum {
-      LOADSUCCESS(1),
-      LOADFAIL(2),
-      EVENT_NOT_SET(0);
-      private final int value;
-      private EventCase(int value) {
-        this.value = value;
-      }
-      /**
-       * @param value The number of the enum to look for.
-       * @return The enum associated with the given number.
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static EventCase valueOf(int value) {
-        return forNumber(value);
-      }
-
-      public static EventCase forNumber(int value) {
-        switch (value) {
-          case 1: return LOADSUCCESS;
-          case 2: return LOADFAIL;
-          case 0: return EVENT_NOT_SET;
-          default: return null;
-        }
-      }
-      public int getNumber() {
-        return this.value;
-      }
-    };
-
-    public EventCase
-    getEventCase() {
-      return EventCase.forNumber(
-          eventCase_);
-    }
-
-    public static final int LOADSUCCESS_FIELD_NUMBER = 1;
+    public static final int EVENT_FIELD_NUMBER = 1;
+    private com.google.protobuf.Any event_;
     /**
-     * <code>.com.taylor.demo.protobuf.gen.LoadSuccess loadSuccess = 1;</code>
-     * @return Whether the loadSuccess field is set.
+     * <code>.google.protobuf.Any event = 1;</code>
+     * @return Whether the event field is set.
      */
     @java.lang.Override
-    public boolean hasLoadSuccess() {
-      return eventCase_ == 1;
+    public boolean hasEvent() {
+      return event_ != null;
     }
     /**
-     * <code>.com.taylor.demo.protobuf.gen.LoadSuccess loadSuccess = 1;</code>
-     * @return The loadSuccess.
+     * <code>.google.protobuf.Any event = 1;</code>
+     * @return The event.
      */
     @java.lang.Override
-    public com.taylor.demo.protobuf.gen.AdLog.LoadSuccess getLoadSuccess() {
-      if (eventCase_ == 1) {
-         return (com.taylor.demo.protobuf.gen.AdLog.LoadSuccess) event_;
-      }
-      return com.taylor.demo.protobuf.gen.AdLog.LoadSuccess.getDefaultInstance();
+    public com.google.protobuf.Any getEvent() {
+      return event_ == null ? com.google.protobuf.Any.getDefaultInstance() : event_;
     }
     /**
-     * <code>.com.taylor.demo.protobuf.gen.LoadSuccess loadSuccess = 1;</code>
+     * <code>.google.protobuf.Any event = 1;</code>
      */
     @java.lang.Override
-    public com.taylor.demo.protobuf.gen.AdLog.LoadSuccessOrBuilder getLoadSuccessOrBuilder() {
-      if (eventCase_ == 1) {
-         return (com.taylor.demo.protobuf.gen.AdLog.LoadSuccess) event_;
-      }
-      return com.taylor.demo.protobuf.gen.AdLog.LoadSuccess.getDefaultInstance();
-    }
-
-    public static final int LOADFAIL_FIELD_NUMBER = 2;
-    /**
-     * <code>.com.taylor.demo.protobuf.gen.LoadFail loadFail = 2;</code>
-     * @return Whether the loadFail field is set.
-     */
-    @java.lang.Override
-    public boolean hasLoadFail() {
-      return eventCase_ == 2;
-    }
-    /**
-     * <code>.com.taylor.demo.protobuf.gen.LoadFail loadFail = 2;</code>
-     * @return The loadFail.
-     */
-    @java.lang.Override
-    public com.taylor.demo.protobuf.gen.AdLog.LoadFail getLoadFail() {
-      if (eventCase_ == 2) {
-         return (com.taylor.demo.protobuf.gen.AdLog.LoadFail) event_;
-      }
-      return com.taylor.demo.protobuf.gen.AdLog.LoadFail.getDefaultInstance();
-    }
-    /**
-     * <code>.com.taylor.demo.protobuf.gen.LoadFail loadFail = 2;</code>
-     */
-    @java.lang.Override
-    public com.taylor.demo.protobuf.gen.AdLog.LoadFailOrBuilder getLoadFailOrBuilder() {
-      if (eventCase_ == 2) {
-         return (com.taylor.demo.protobuf.gen.AdLog.LoadFail) event_;
-      }
-      return com.taylor.demo.protobuf.gen.AdLog.LoadFail.getDefaultInstance();
+    public com.google.protobuf.AnyOrBuilder getEventOrBuilder() {
+      return event_ == null ? com.google.protobuf.Any.getDefaultInstance() : event_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -1458,11 +1353,8 @@ public final class AdLog {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (eventCase_ == 1) {
-        output.writeMessage(1, (com.taylor.demo.protobuf.gen.AdLog.LoadSuccess) event_);
-      }
-      if (eventCase_ == 2) {
-        output.writeMessage(2, (com.taylor.demo.protobuf.gen.AdLog.LoadFail) event_);
+      if (event_ != null) {
+        output.writeMessage(1, getEvent());
       }
       getUnknownFields().writeTo(output);
     }
@@ -1473,13 +1365,9 @@ public final class AdLog {
       if (size != -1) return size;
 
       size = 0;
-      if (eventCase_ == 1) {
+      if (event_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, (com.taylor.demo.protobuf.gen.AdLog.LoadSuccess) event_);
-      }
-      if (eventCase_ == 2) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, (com.taylor.demo.protobuf.gen.AdLog.LoadFail) event_);
+          .computeMessageSize(1, getEvent());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -1496,18 +1384,10 @@ public final class AdLog {
       }
       com.taylor.demo.protobuf.gen.AdLog.Event other = (com.taylor.demo.protobuf.gen.AdLog.Event) obj;
 
-      if (!getEventCase().equals(other.getEventCase())) return false;
-      switch (eventCase_) {
-        case 1:
-          if (!getLoadSuccess()
-              .equals(other.getLoadSuccess())) return false;
-          break;
-        case 2:
-          if (!getLoadFail()
-              .equals(other.getLoadFail())) return false;
-          break;
-        case 0:
-        default:
+      if (hasEvent() != other.hasEvent()) return false;
+      if (hasEvent()) {
+        if (!getEvent()
+            .equals(other.getEvent())) return false;
       }
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
@@ -1520,17 +1400,9 @@ public final class AdLog {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      switch (eventCase_) {
-        case 1:
-          hash = (37 * hash) + LOADSUCCESS_FIELD_NUMBER;
-          hash = (53 * hash) + getLoadSuccess().hashCode();
-          break;
-        case 2:
-          hash = (37 * hash) + LOADFAIL_FIELD_NUMBER;
-          hash = (53 * hash) + getLoadFail().hashCode();
-          break;
-        case 0:
-        default:
+      if (hasEvent()) {
+        hash = (37 * hash) + EVENT_FIELD_NUMBER;
+        hash = (53 * hash) + getEvent().hashCode();
       }
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
@@ -1581,11 +1453,13 @@ public final class AdLog {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
+
     public static com.taylor.demo.protobuf.gen.AdLog.Event parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
+
     public static com.taylor.demo.protobuf.gen.AdLog.Event parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1661,14 +1535,11 @@ public final class AdLog {
       public Builder clear() {
         super.clear();
         bitField0_ = 0;
-        if (loadSuccessBuilder_ != null) {
-          loadSuccessBuilder_.clear();
-        }
-        if (loadFailBuilder_ != null) {
-          loadFailBuilder_.clear();
-        }
-        eventCase_ = 0;
         event_ = null;
+        if (eventBuilder_ != null) {
+          eventBuilder_.dispose();
+          eventBuilder_ = null;
+        }
         return this;
       }
 
@@ -1696,25 +1567,16 @@ public final class AdLog {
       public com.taylor.demo.protobuf.gen.AdLog.Event buildPartial() {
         com.taylor.demo.protobuf.gen.AdLog.Event result = new com.taylor.demo.protobuf.gen.AdLog.Event(this);
         if (bitField0_ != 0) { buildPartial0(result); }
-        buildPartialOneofs(result);
         onBuilt();
         return result;
       }
 
       private void buildPartial0(com.taylor.demo.protobuf.gen.AdLog.Event result) {
         int from_bitField0_ = bitField0_;
-      }
-
-      private void buildPartialOneofs(com.taylor.demo.protobuf.gen.AdLog.Event result) {
-        result.eventCase_ = eventCase_;
-        result.event_ = this.event_;
-        if (eventCase_ == 1 &&
-            loadSuccessBuilder_ != null) {
-          result.event_ = loadSuccessBuilder_.build();
-        }
-        if (eventCase_ == 2 &&
-            loadFailBuilder_ != null) {
-          result.event_ = loadFailBuilder_.build();
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.event_ = eventBuilder_ == null
+              ? event_
+              : eventBuilder_.build();
         }
       }
 
@@ -1762,18 +1624,8 @@ public final class AdLog {
 
       public Builder mergeFrom(com.taylor.demo.protobuf.gen.AdLog.Event other) {
         if (other == com.taylor.demo.protobuf.gen.AdLog.Event.getDefaultInstance()) return this;
-        switch (other.getEventCase()) {
-          case LOADSUCCESS: {
-            mergeLoadSuccess(other.getLoadSuccess());
-            break;
-          }
-          case LOADFAIL: {
-            mergeLoadFail(other.getLoadFail());
-            break;
-          }
-          case EVENT_NOT_SET: {
-            break;
-          }
+        if (other.hasEvent()) {
+          mergeEvent(other.getEvent());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
@@ -1803,18 +1655,11 @@ public final class AdLog {
                 break;
               case 10: {
                 input.readMessage(
-                    getLoadSuccessFieldBuilder().getBuilder(),
+                    getEventFieldBuilder().getBuilder(),
                     extensionRegistry);
-                eventCase_ = 1;
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
-              case 18: {
-                input.readMessage(
-                    getLoadFailFieldBuilder().getBuilder(),
-                    extensionRegistry);
-                eventCase_ = 2;
-                break;
-              } // case 18
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -1830,305 +1675,125 @@ public final class AdLog {
         } // finally
         return this;
       }
-      private int eventCase_ = 0;
-      private java.lang.Object event_;
-      public EventCase
-          getEventCase() {
-        return EventCase.forNumber(
-            eventCase_);
-      }
-
-      public Builder clearEvent() {
-        eventCase_ = 0;
-        event_ = null;
-        onChanged();
-        return this;
-      }
-
       private int bitField0_;
 
+      private com.google.protobuf.Any event_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.taylor.demo.protobuf.gen.AdLog.LoadSuccess, com.taylor.demo.protobuf.gen.AdLog.LoadSuccess.Builder, com.taylor.demo.protobuf.gen.AdLog.LoadSuccessOrBuilder> loadSuccessBuilder_;
+          com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> eventBuilder_;
       /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadSuccess loadSuccess = 1;</code>
-       * @return Whether the loadSuccess field is set.
+       * <code>.google.protobuf.Any event = 1;</code>
+       * @return Whether the event field is set.
        */
-      @java.lang.Override
-      public boolean hasLoadSuccess() {
-        return eventCase_ == 1;
+      public boolean hasEvent() {
+        return ((bitField0_ & 0x00000001) != 0);
       }
       /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadSuccess loadSuccess = 1;</code>
-       * @return The loadSuccess.
+       * <code>.google.protobuf.Any event = 1;</code>
+       * @return The event.
        */
-      @java.lang.Override
-      public com.taylor.demo.protobuf.gen.AdLog.LoadSuccess getLoadSuccess() {
-        if (loadSuccessBuilder_ == null) {
-          if (eventCase_ == 1) {
-            return (com.taylor.demo.protobuf.gen.AdLog.LoadSuccess) event_;
-          }
-          return com.taylor.demo.protobuf.gen.AdLog.LoadSuccess.getDefaultInstance();
+      public com.google.protobuf.Any getEvent() {
+        if (eventBuilder_ == null) {
+          return event_ == null ? com.google.protobuf.Any.getDefaultInstance() : event_;
         } else {
-          if (eventCase_ == 1) {
-            return loadSuccessBuilder_.getMessage();
-          }
-          return com.taylor.demo.protobuf.gen.AdLog.LoadSuccess.getDefaultInstance();
+          return eventBuilder_.getMessage();
         }
       }
       /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadSuccess loadSuccess = 1;</code>
+       * <code>.google.protobuf.Any event = 1;</code>
        */
-      public Builder setLoadSuccess(com.taylor.demo.protobuf.gen.AdLog.LoadSuccess value) {
-        if (loadSuccessBuilder_ == null) {
+      public Builder setEvent(com.google.protobuf.Any value) {
+        if (eventBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
           event_ = value;
-          onChanged();
         } else {
-          loadSuccessBuilder_.setMessage(value);
+          eventBuilder_.setMessage(value);
         }
-        eventCase_ = 1;
+        bitField0_ |= 0x00000001;
+        onChanged();
         return this;
       }
       /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadSuccess loadSuccess = 1;</code>
+       * <code>.google.protobuf.Any event = 1;</code>
        */
-      public Builder setLoadSuccess(
-          com.taylor.demo.protobuf.gen.AdLog.LoadSuccess.Builder builderForValue) {
-        if (loadSuccessBuilder_ == null) {
+      public Builder setEvent(
+          com.google.protobuf.Any.Builder builderForValue) {
+        if (eventBuilder_ == null) {
           event_ = builderForValue.build();
-          onChanged();
         } else {
-          loadSuccessBuilder_.setMessage(builderForValue.build());
+          eventBuilder_.setMessage(builderForValue.build());
         }
-        eventCase_ = 1;
+        bitField0_ |= 0x00000001;
+        onChanged();
         return this;
       }
       /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadSuccess loadSuccess = 1;</code>
+       * <code>.google.protobuf.Any event = 1;</code>
        */
-      public Builder mergeLoadSuccess(com.taylor.demo.protobuf.gen.AdLog.LoadSuccess value) {
-        if (loadSuccessBuilder_ == null) {
-          if (eventCase_ == 1 &&
-              event_ != com.taylor.demo.protobuf.gen.AdLog.LoadSuccess.getDefaultInstance()) {
-            event_ = com.taylor.demo.protobuf.gen.AdLog.LoadSuccess.newBuilder((com.taylor.demo.protobuf.gen.AdLog.LoadSuccess) event_)
-                .mergeFrom(value).buildPartial();
+      public Builder mergeEvent(com.google.protobuf.Any value) {
+        if (eventBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0) &&
+            event_ != null &&
+            event_ != com.google.protobuf.Any.getDefaultInstance()) {
+            getEventBuilder().mergeFrom(value);
           } else {
             event_ = value;
           }
-          onChanged();
         } else {
-          if (eventCase_ == 1) {
-            loadSuccessBuilder_.mergeFrom(value);
-          } else {
-            loadSuccessBuilder_.setMessage(value);
-          }
+          eventBuilder_.mergeFrom(value);
         }
-        eventCase_ = 1;
+        bitField0_ |= 0x00000001;
+        onChanged();
         return this;
       }
       /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadSuccess loadSuccess = 1;</code>
+       * <code>.google.protobuf.Any event = 1;</code>
        */
-      public Builder clearLoadSuccess() {
-        if (loadSuccessBuilder_ == null) {
-          if (eventCase_ == 1) {
-            eventCase_ = 0;
-            event_ = null;
-            onChanged();
-          }
-        } else {
-          if (eventCase_ == 1) {
-            eventCase_ = 0;
-            event_ = null;
-          }
-          loadSuccessBuilder_.clear();
+      public Builder clearEvent() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        event_ = null;
+        if (eventBuilder_ != null) {
+          eventBuilder_.dispose();
+          eventBuilder_ = null;
         }
+        onChanged();
         return this;
       }
       /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadSuccess loadSuccess = 1;</code>
+       * <code>.google.protobuf.Any event = 1;</code>
        */
-      public com.taylor.demo.protobuf.gen.AdLog.LoadSuccess.Builder getLoadSuccessBuilder() {
-        return getLoadSuccessFieldBuilder().getBuilder();
+      public com.google.protobuf.Any.Builder getEventBuilder() {
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return getEventFieldBuilder().getBuilder();
       }
       /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadSuccess loadSuccess = 1;</code>
+       * <code>.google.protobuf.Any event = 1;</code>
        */
-      @java.lang.Override
-      public com.taylor.demo.protobuf.gen.AdLog.LoadSuccessOrBuilder getLoadSuccessOrBuilder() {
-        if ((eventCase_ == 1) && (loadSuccessBuilder_ != null)) {
-          return loadSuccessBuilder_.getMessageOrBuilder();
+      public com.google.protobuf.AnyOrBuilder getEventOrBuilder() {
+        if (eventBuilder_ != null) {
+          return eventBuilder_.getMessageOrBuilder();
         } else {
-          if (eventCase_ == 1) {
-            return (com.taylor.demo.protobuf.gen.AdLog.LoadSuccess) event_;
-          }
-          return com.taylor.demo.protobuf.gen.AdLog.LoadSuccess.getDefaultInstance();
+          return event_ == null ?
+              com.google.protobuf.Any.getDefaultInstance() : event_;
         }
       }
       /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadSuccess loadSuccess = 1;</code>
+       * <code>.google.protobuf.Any event = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.taylor.demo.protobuf.gen.AdLog.LoadSuccess, com.taylor.demo.protobuf.gen.AdLog.LoadSuccess.Builder, com.taylor.demo.protobuf.gen.AdLog.LoadSuccessOrBuilder> 
-          getLoadSuccessFieldBuilder() {
-        if (loadSuccessBuilder_ == null) {
-          if (!(eventCase_ == 1)) {
-            event_ = com.taylor.demo.protobuf.gen.AdLog.LoadSuccess.getDefaultInstance();
-          }
-          loadSuccessBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.taylor.demo.protobuf.gen.AdLog.LoadSuccess, com.taylor.demo.protobuf.gen.AdLog.LoadSuccess.Builder, com.taylor.demo.protobuf.gen.AdLog.LoadSuccessOrBuilder>(
-                  (com.taylor.demo.protobuf.gen.AdLog.LoadSuccess) event_,
+          com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> 
+          getEventFieldBuilder() {
+        if (eventBuilder_ == null) {
+          eventBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder>(
+                  getEvent(),
                   getParentForChildren(),
                   isClean());
           event_ = null;
         }
-        eventCase_ = 1;
-        onChanged();
-        return loadSuccessBuilder_;
-      }
-
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.taylor.demo.protobuf.gen.AdLog.LoadFail, com.taylor.demo.protobuf.gen.AdLog.LoadFail.Builder, com.taylor.demo.protobuf.gen.AdLog.LoadFailOrBuilder> loadFailBuilder_;
-      /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadFail loadFail = 2;</code>
-       * @return Whether the loadFail field is set.
-       */
-      @java.lang.Override
-      public boolean hasLoadFail() {
-        return eventCase_ == 2;
-      }
-      /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadFail loadFail = 2;</code>
-       * @return The loadFail.
-       */
-      @java.lang.Override
-      public com.taylor.demo.protobuf.gen.AdLog.LoadFail getLoadFail() {
-        if (loadFailBuilder_ == null) {
-          if (eventCase_ == 2) {
-            return (com.taylor.demo.protobuf.gen.AdLog.LoadFail) event_;
-          }
-          return com.taylor.demo.protobuf.gen.AdLog.LoadFail.getDefaultInstance();
-        } else {
-          if (eventCase_ == 2) {
-            return loadFailBuilder_.getMessage();
-          }
-          return com.taylor.demo.protobuf.gen.AdLog.LoadFail.getDefaultInstance();
-        }
-      }
-      /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadFail loadFail = 2;</code>
-       */
-      public Builder setLoadFail(com.taylor.demo.protobuf.gen.AdLog.LoadFail value) {
-        if (loadFailBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          event_ = value;
-          onChanged();
-        } else {
-          loadFailBuilder_.setMessage(value);
-        }
-        eventCase_ = 2;
-        return this;
-      }
-      /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadFail loadFail = 2;</code>
-       */
-      public Builder setLoadFail(
-          com.taylor.demo.protobuf.gen.AdLog.LoadFail.Builder builderForValue) {
-        if (loadFailBuilder_ == null) {
-          event_ = builderForValue.build();
-          onChanged();
-        } else {
-          loadFailBuilder_.setMessage(builderForValue.build());
-        }
-        eventCase_ = 2;
-        return this;
-      }
-      /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadFail loadFail = 2;</code>
-       */
-      public Builder mergeLoadFail(com.taylor.demo.protobuf.gen.AdLog.LoadFail value) {
-        if (loadFailBuilder_ == null) {
-          if (eventCase_ == 2 &&
-              event_ != com.taylor.demo.protobuf.gen.AdLog.LoadFail.getDefaultInstance()) {
-            event_ = com.taylor.demo.protobuf.gen.AdLog.LoadFail.newBuilder((com.taylor.demo.protobuf.gen.AdLog.LoadFail) event_)
-                .mergeFrom(value).buildPartial();
-          } else {
-            event_ = value;
-          }
-          onChanged();
-        } else {
-          if (eventCase_ == 2) {
-            loadFailBuilder_.mergeFrom(value);
-          } else {
-            loadFailBuilder_.setMessage(value);
-          }
-        }
-        eventCase_ = 2;
-        return this;
-      }
-      /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadFail loadFail = 2;</code>
-       */
-      public Builder clearLoadFail() {
-        if (loadFailBuilder_ == null) {
-          if (eventCase_ == 2) {
-            eventCase_ = 0;
-            event_ = null;
-            onChanged();
-          }
-        } else {
-          if (eventCase_ == 2) {
-            eventCase_ = 0;
-            event_ = null;
-          }
-          loadFailBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadFail loadFail = 2;</code>
-       */
-      public com.taylor.demo.protobuf.gen.AdLog.LoadFail.Builder getLoadFailBuilder() {
-        return getLoadFailFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadFail loadFail = 2;</code>
-       */
-      @java.lang.Override
-      public com.taylor.demo.protobuf.gen.AdLog.LoadFailOrBuilder getLoadFailOrBuilder() {
-        if ((eventCase_ == 2) && (loadFailBuilder_ != null)) {
-          return loadFailBuilder_.getMessageOrBuilder();
-        } else {
-          if (eventCase_ == 2) {
-            return (com.taylor.demo.protobuf.gen.AdLog.LoadFail) event_;
-          }
-          return com.taylor.demo.protobuf.gen.AdLog.LoadFail.getDefaultInstance();
-        }
-      }
-      /**
-       * <code>.com.taylor.demo.protobuf.gen.LoadFail loadFail = 2;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.taylor.demo.protobuf.gen.AdLog.LoadFail, com.taylor.demo.protobuf.gen.AdLog.LoadFail.Builder, com.taylor.demo.protobuf.gen.AdLog.LoadFailOrBuilder> 
-          getLoadFailFieldBuilder() {
-        if (loadFailBuilder_ == null) {
-          if (!(eventCase_ == 2)) {
-            event_ = com.taylor.demo.protobuf.gen.AdLog.LoadFail.getDefaultInstance();
-          }
-          loadFailBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.taylor.demo.protobuf.gen.AdLog.LoadFail, com.taylor.demo.protobuf.gen.AdLog.LoadFail.Builder, com.taylor.demo.protobuf.gen.AdLog.LoadFailOrBuilder>(
-                  (com.taylor.demo.protobuf.gen.AdLog.LoadFail) event_,
-                  getParentForChildren(),
-                  isClean());
-          event_ = null;
-        }
-        eventCase_ = 2;
-        onChanged();
-        return loadFailBuilder_;
+        return eventBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -2245,11 +1910,6 @@ public final class AdLog {
       return new EventBatch();
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return com.taylor.demo.protobuf.gen.AdLog.internal_static_com_taylor_demo_protobuf_gen_EventBatch_descriptor;
@@ -2415,11 +2075,13 @@ public final class AdLog {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
+
     public static com.taylor.demo.protobuf.gen.AdLog.EventBatch parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
+
     public static com.taylor.demo.protobuf.gen.AdLog.EventBatch parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3009,19 +2671,19 @@ public final class AdLog {
   static {
     java.lang.String[] descriptorData = {
       "\n%com/taylor/demo/protobuf/ad_log.proto\022" +
-      "\034com.taylor.demo.protobuf.gen\"B\n\013LoadSuc" +
-      "cess\022\020\n\010duration\030\001 \001(\005\022\r\n\005count\030\002 \001(\005\022\022\n" +
-      "\nisHitCache\030\003 \001(\010\")\n\010LoadFail\022\017\n\007message" +
-      "\030\001 \001(\t\022\014\n\004code\030\002 \001(\005\"\216\001\n\005Event\022@\n\013loadSu" +
-      "ccess\030\001 \001(\0132).com.taylor.demo.protobuf.g" +
-      "en.LoadSuccessH\000\022:\n\010loadFail\030\002 \001(\0132&.com" +
-      ".taylor.demo.protobuf.gen.LoadFailH\000B\007\n\005" +
-      "event\"A\n\nEventBatch\0223\n\006events\030\001 \003(\0132#.co" +
-      "m.taylor.demo.protobuf.gen.Eventb\006proto3"
+      "\034com.taylor.demo.protobuf.gen\032\031google/pr" +
+      "otobuf/any.proto\"B\n\013LoadSuccess\022\020\n\010durat" +
+      "ion\030\001 \001(\005\022\r\n\005count\030\002 \001(\005\022\022\n\nisHitCache\030\003" +
+      " \001(\010\")\n\010LoadFail\022\017\n\007message\030\001 \001(\t\022\014\n\004cod" +
+      "e\030\002 \001(\005\",\n\005Event\022#\n\005event\030\001 \001(\0132\024.google" +
+      ".protobuf.Any\"A\n\nEventBatch\0223\n\006events\030\001 " +
+      "\003(\0132#.com.taylor.demo.protobuf.gen.Event" +
+      "b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          com.google.protobuf.AnyProto.getDescriptor(),
         });
     internal_static_com_taylor_demo_protobuf_gen_LoadSuccess_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -3040,13 +2702,14 @@ public final class AdLog {
     internal_static_com_taylor_demo_protobuf_gen_Event_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_taylor_demo_protobuf_gen_Event_descriptor,
-        new java.lang.String[] { "LoadSuccess", "LoadFail", "Event", });
+        new java.lang.String[] { "Event", });
     internal_static_com_taylor_demo_protobuf_gen_EventBatch_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_com_taylor_demo_protobuf_gen_EventBatch_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_taylor_demo_protobuf_gen_EventBatch_descriptor,
         new java.lang.String[] { "Events", });
+    com.google.protobuf.AnyProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)
