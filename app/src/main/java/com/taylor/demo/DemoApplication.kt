@@ -11,7 +11,7 @@ import com.taylor.demo.protobuf.gen.event
 import com.taylor.demo.protobuf.gen.loadSuccess
 import com.taylor.easylog.EasyLog
 import com.tencent.mmkv.MMKV
-import com.zenmen.easylog_su.Batcher
+import com.zenmen.easylog_su.Pipeline
 import com.zenmen.easylog_su.simpleInit
 import com.taylor.demo.call_adapter.ResultCallAdapterFactory
 import okhttp3.OkHttpClient
@@ -80,8 +80,8 @@ class DemoApplication : Application() {
     }
 
 
-    private val batcher by lazy {
-        object : Batcher<Message, EventBatch> {
+    private val pipeline by lazy {
+        object : Pipeline<Message, EventBatch> {
             override fun pack(logs: List<Message>): EventBatch {
                 return logs.fold(EventBatch.newBuilder()) { acc: EventBatch.Builder, any: Message -> acc.addEvents(event { event = com.google.protobuf.Any.pack(any) }) }.build()
             }
@@ -111,7 +111,7 @@ class DemoApplication : Application() {
     private var mCount = 0;
 
     private fun initEasyLog() {
-        EasyLog.simpleInit(5, 10_000, batcher)
+        EasyLog.simpleInit(5, 10_000, pipeline)
         repeat(5) {
             EasyLog.log(loadSuccess {
                 duration = 100

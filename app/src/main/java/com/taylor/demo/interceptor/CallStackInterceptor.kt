@@ -1,4 +1,4 @@
-package com.zenmen.easylog_su.interceptor
+package com.taylor.demo.interceptor
 
 import com.taylor.easylog.Chain
 import com.taylor.easylog.EasyLog
@@ -21,7 +21,7 @@ class CallStackInterceptor : Interceptor<Any> {
     }
 
     override fun log(tag: String, message: Any,  priority: Int, chain: Chain, vararg args: Any) {
-        chain.proceed(tag,HEADER, priority)
+        chain.proceed(tag, HEADER, priority)
         chain.proceed(tag,"$LEFT_BORDER$message", priority)
         getCallStack(blackList).forEach {
             val callStack = StringBuilder()
@@ -29,7 +29,7 @@ class CallStackInterceptor : Interceptor<Any> {
                 .append("\t${it}").toString()
             chain.proceed(tag,callStack,priority)
         }
-        chain.proceed(tag,FOOTER, priority)
+        chain.proceed(tag, FOOTER, priority)
     }
 
     override fun enable(): Boolean {

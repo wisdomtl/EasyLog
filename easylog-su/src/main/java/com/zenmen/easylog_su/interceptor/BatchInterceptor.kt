@@ -3,7 +3,7 @@ package com.zenmen.easylog_su.interceptor
 import android.os.SystemClock
 import com.taylor.easylog.Chain
 import com.taylor.easylog.Interceptor
-import com.zenmen.easylog_su.Batcher
+import com.zenmen.easylog_su.Pipeline
 import com.zenmen.easylog_su.model.Log
 import com.zenmen.easylog_su.model.LogBatch
 
@@ -13,7 +13,7 @@ import com.zenmen.easylog_su.model.LogBatch
 class BatchInterceptor<LOG, LOGS>(
     private val size: Int,
     private val duration: Long,
-    private val batcher: Batcher<LOG, LOGS>
+    private val pipeline: Pipeline<LOG, LOGS>
 ) : Interceptor<Log<LOG>> {
     /**
      * A list for counting event
@@ -25,7 +25,7 @@ class BatchInterceptor<LOG, LOGS>(
         if (enable()) {
             list.add(log)
             if (lastTime != 0L && SystemClock.elapsedRealtime() - lastTime >= duration || list.size >= size) {
-                val logs = batcher.pack(list.map { it.data })
+                val logs = pipeline.pack(list.map { it.data })
                 val logBatch = LogBatch(list.map { it.id }, logs)
                 chain.proceed(tag, logBatch, priority, args)
                 list.clear()

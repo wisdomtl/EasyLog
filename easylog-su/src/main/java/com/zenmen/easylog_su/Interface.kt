@@ -1,10 +1,10 @@
 package com.zenmen.easylog_su
 
 
-interface Batcher<LOG, LOGS> {
+interface Pipeline<LOG, LOGS> {
 
     /**
-     * Convert [LOG] into [ByteArray] used by localization
+     * Convert [LOG] into [ByteArray]
      */
     fun toByteArray(log:LOG): ByteArray
 
