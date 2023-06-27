@@ -1,7 +1,6 @@
 package com.zenmen.easylog_su
 
 import com.taylor.easylog.EasyLog
-import com.taylor.easylog.interceptor.FormatInterceptor
 import com.taylor.easylog.interceptor.LogcatInterceptor
 import com.zenmen.easylog_su.interceptor.*
 
@@ -11,8 +10,7 @@ import com.zenmen.easylog_su.interceptor.*
  */
 fun EasyLog.simpleInit(size: Int, duration: Long, pipeline: Pipeline<*, *>) {
     EasyLog.apply {
-        //        addInterceptor(FormatInterceptor())
-        //        addInterceptor(LogcatInterceptor())
+        addInterceptor(LogcatInterceptor())
         addInterceptor(LinearInterceptor())
         addInterceptor(LogInterceptor())
         addInterceptor(SinkInterceptor(pipeline))
@@ -23,7 +21,6 @@ fun EasyLog.simpleInit(size: Int, duration: Long, pipeline: Pipeline<*, *>) {
 
 fun EasyLog.defaultInit() {
     EasyLog.apply {
-        addInterceptor(FormatInterceptor())
         addInterceptor(LogcatInterceptor())
     }
 }

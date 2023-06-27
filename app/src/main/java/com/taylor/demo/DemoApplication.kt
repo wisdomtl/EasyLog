@@ -14,6 +14,10 @@ import com.tencent.mmkv.MMKV
 import com.zenmen.easylog_su.Pipeline
 import com.zenmen.easylog_su.simpleInit
 import com.taylor.demo.call_adapter.ResultCallAdapterFactory
+import com.zenmen.easylog_su.interceptor.FrameInterceptor
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.protobuf.ProtoConverterFactory
@@ -21,6 +25,8 @@ import java.util.concurrent.TimeUnit
 
 
 class DemoApplication : Application() {
+
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreate() {
         super.onCreate()
@@ -30,25 +36,25 @@ class DemoApplication : Application() {
          */
         initEasyLog()
         initTaylorSdk()
-        //        EasyLog.log(message = "i am a android develp", priority = EasyLog.ERROR)
-        //        EasyLog.tag("telanx").log(message = "i named telanx", priority = EasyLog.ERROR)
-        //        EasyLog.log(message = "abcdefg", priority = EasyLog.ERROR)
-        //        EasyLog.log(IllegalArgumentException("dfdfdfdfdsfsfdsfdf"), EasyLog.ERROR)
-        //        EasyLog.log("message %s", EasyLog.ERROR, "sss")
-        //        scope.launch(Dispatchers.IO) {
-        //            repeat(1000) { EasyLog.log("counting $it") }
-        //        }
-        //        EasyLog.interceptor(FrameInterceptor()).log("this is onetime interceptor")
-        //        EasyLog.log("after one time interceptor")
-        //        val list = listOf(
-        //            Data(1, true),
-        //            Data(2, true),
-        //            Data(3, false),
-        //        )
-        //        EasyLog.list(list) { "${it.a} + ${it.b}" }
-        //        EasyLog.log("after list printed")
-        //        EasyLog.map(mapOf("abd" to 11, "ddd" to 2))
-        //        EasyLog.map(mapOf("abd" to mapOf(1 to 2, 3 to 4), "abd" to mapOf(44 to 2, 33 to 4)))
+        EasyLog.log(message = "i am a android develp", priority = EasyLog.ERROR)
+        EasyLog.tag("telanx").log(message = "i named telanx", priority = EasyLog.ERROR)
+        EasyLog.log(message = "abcdefg", priority = EasyLog.ERROR)
+        EasyLog.log(IllegalArgumentException("dfdfdfdfdsfsfdsfdf"), EasyLog.ERROR)
+        EasyLog.log("message %s", EasyLog.ERROR, "sss")
+        scope.launch(Dispatchers.IO) {
+            repeat(1000) { EasyLog.log("counting $it") }
+        }
+        EasyLog.interceptor(FrameInterceptor()).log("this is onetime interceptor")
+        EasyLog.log("after one time interceptor")
+        val list = listOf(
+            Data(1, true),
+            Data(2, true),
+            Data(3, false),
+        )
+        EasyLog.list(list) { "${it.a} + ${it.b}" }
+        EasyLog.log("after list printed")
+        EasyLog.map(mapOf("abd" to 11, "ddd" to 2))
+        EasyLog.map(mapOf("abd" to mapOf(1 to 2, 3 to 4), "abd" to mapOf(44 to 2, 33 to 4)))
     }
 
     /**
@@ -86,7 +92,7 @@ class DemoApplication : Application() {
                 return logs.fold(EventBatch.newBuilder()) { acc: EventBatch.Builder, any: Message -> acc.addEvents(event { event = com.google.protobuf.Any.pack(any) }) }.build()
             }
 
-            override suspend fun upload(eventBatch: EventBatch): Boolean{
+            override suspend fun upload(eventBatch: EventBatch): Boolean {
                 for (event in eventBatch.eventsList) {
                     when {
                         event.event.`is`(LoadFail::class.java) -> Log.d("ttaylor", "DemoApplication.upload[eventBatch]: loadSuccess=${event.event.unpack(LoadFail::class.java)}")
@@ -98,7 +104,7 @@ class DemoApplication : Application() {
                         }
                     }
                 }
-//                val result = trackApi.track(eventBatch)
+                //                val result = trackApi.track(eventBatch)
                 return true
             }
 
@@ -131,3 +137,5 @@ fun <T> Collection<T>.print(map: (T) -> String) =
         this.forEach { e -> sb.append("\t${map(e)},") }
         sb.append("]")
     }.toString()
+
+data class Data(val a: Int, val b: Boolean)

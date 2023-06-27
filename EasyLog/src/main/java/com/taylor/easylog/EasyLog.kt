@@ -1,7 +1,6 @@
 package com.taylor.easylog
 
 import android.os.Build
-import com.taylor.easylog.interceptor.FormatInterceptor
 import com.taylor.easylog.interceptor.ListInterceptor
 import com.taylor.easylog.interceptor.MapInterceptor
 import java.util.regex.Pattern
@@ -69,7 +68,6 @@ object EasyLog {
      */
     private val blackList = listOf(
         EasyLog::class.java.name,
-        FormatInterceptor::class.java.name,
         Chain::class.java.name
     )
 
