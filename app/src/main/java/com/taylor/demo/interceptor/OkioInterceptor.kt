@@ -13,7 +13,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class OkioInterceptor private constructor(private var dir: String) : Interceptor<Any> {
+class OkioInterceptor private constructor(private var dir: String) : Interceptor<Any>() {
     private val handlerThread = HandlerThread("log_to_file_thread")
     private val handler: Handler
     private var startTime = System.currentTimeMillis()
@@ -67,10 +67,6 @@ class OkioInterceptor private constructor(private var dir: String) : Interceptor
             sendMessageDelayed(flushMessage, FLUSH_LOG_DELAY_MILLIS)
         }
 //        chain.proceed(message, tag, priority)
-    }
-
-    override fun enable(): Boolean {
-        return true
     }
 
     @SuppressLint("SimpleDateFormat")

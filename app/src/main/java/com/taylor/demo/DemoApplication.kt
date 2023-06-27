@@ -3,6 +3,7 @@ package com.taylor.demo
 import android.app.Application
 import android.util.Log
 import com.google.protobuf.Message
+import com.google.protobuf.MessageLite
 import com.taylor.demo.api.TrackApi
 import com.taylor.demo.protobuf.gen.AdLog.EventBatch
 import com.taylor.demo.protobuf.gen.AdLog.LoadFail
@@ -117,7 +118,7 @@ class DemoApplication : Application() {
     private var mCount = 0;
 
     private fun initEasyLog() {
-        EasyLog.simpleInit(5, 10_000, pipeline)
+        EasyLog.simpleInit(5, 10_000, pipeline){log-> log is MessageLite}
         repeat(5) {
             EasyLog.log(loadSuccess {
                 duration = 100

@@ -3,7 +3,7 @@ package com.zenmen.easylog_su.interceptor
 import com.taylor.easylog.Chain
 import com.taylor.easylog.Interceptor
 
-class FrameInterceptor : Interceptor<Any> {
+class FrameInterceptor : Interceptor<Any>() {
     private val HEADER =
         "┌──────────────────────────────────────────────────────────────────────────────────────────────────────"
     private val FOOTER =
@@ -15,5 +15,4 @@ class FrameInterceptor : Interceptor<Any> {
         chain.proceed(tag,msg, priority, args)
     }
 
-    override fun enable(): Boolean = true
 }

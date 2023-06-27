@@ -14,7 +14,7 @@ class BatchInterceptor<LOG, LOGS>(
     private val size: Int,
     private val duration: Long,
     private val pipeline: Pipeline<LOG, LOGS>
-) : Interceptor<Log<LOG>> {
+) : Interceptor<Log<LOG>>() {
     /**
      * A list for counting event
      */
@@ -22,7 +22,7 @@ class BatchInterceptor<LOG, LOGS>(
     private var lastTime = 0L
 
     override fun log(tag: String, log: Log<LOG>, priority: Int, chain: Chain, vararg args: Any) {
-        if (enable()) {
+        if (isLoggable(log)) {
             list.add(log)
             if (lastTime != 0L && SystemClock.elapsedRealtime() - lastTime >= duration || list.size >= size) {
                 val logs = pipeline.pack(list.map { it.data })
@@ -34,5 +34,4 @@ class BatchInterceptor<LOG, LOGS>(
         }
     }
 
-    override fun enable(): Boolean = true
 }

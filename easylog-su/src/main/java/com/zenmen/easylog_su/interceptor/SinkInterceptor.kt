@@ -6,16 +6,13 @@ import com.tencent.mmkv.MMKV
 import com.zenmen.easylog_su.Pipeline
 import com.zenmen.easylog_su.model.Log
 
-class SinkInterceptor<LOG>(private val pipeline: Pipeline<LOG, *>) : Interceptor<Log<LOG>> {
+class SinkInterceptor<LOG>(private val pipeline: Pipeline<LOG, *>) : Interceptor<Log<LOG>>() {
     companion object {
         val mmkv by lazy { MMKV.defaultMMKV() }
     }
 
     override fun log(tag: String, message: Log<LOG>, priority: Int, chain: Chain, vararg args: Any) {
-        if (enable()) mmkv.encode(message.id, pipeline.toByteArray(message.data))
+        if (isLoggable(message)) mmkv.encode(message.id, pipeline.toByteArray(message.data))
         chain.proceed(tag, message, priority)
     }
-
-    override fun enable(): Boolean = true
-
 }

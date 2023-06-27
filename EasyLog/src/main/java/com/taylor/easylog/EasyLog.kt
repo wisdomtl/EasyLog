@@ -116,22 +116,22 @@ object EasyLog {
     /**
      * Add [Interceptor] for customizing log process
      */
-    fun addInterceptor(interceptor: Interceptor<*>) {
-        addInterceptor(interceptors.size, interceptor)
+    fun <T> addInterceptor(interceptor: Interceptor<T>, isLoggable: (T) -> Boolean = { true }) {
+        addInterceptor(interceptors.size, interceptor, isLoggable)
     }
 
     /**
      * Add [Interceptor] at [index] for customizing log process
      */
-    fun addInterceptor(index: Int, interceptor: Interceptor<*>) {
-        interceptors.add(index, interceptor)
+    fun <T> addInterceptor(index: Int, interceptor: Interceptor<T>, isLoggable: (T) -> Boolean = { true }) {
+        interceptors.add(index, interceptor.apply { this.isLoggable = isLoggable })
     }
 
     /**
      * Add one time [Interceptor]
      */
     fun interceptor(interceptor: Interceptor<*>): EasyLog {
-        interceptors.add(0, interceptor)// always add log
+        interceptors.add(0, interceptor) // always add log
         if (onetimeInterceptor == null) onetimeInterceptor = ThreadLocal()
         onetimeInterceptor?.set(interceptor)
         return this

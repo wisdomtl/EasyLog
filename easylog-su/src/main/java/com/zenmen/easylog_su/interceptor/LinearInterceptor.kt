@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 /**
  * An [Interceptor] make log in sequence, free of multi-thread problem
  */
-class LinearInterceptor : Interceptor<Any> {
+class LinearInterceptor : Interceptor<Any>() {
 
     private val CHANNEL_CAPACITY = 50
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
@@ -31,14 +31,13 @@ class LinearInterceptor : Interceptor<Any> {
     }
 
     override fun log(tag: String, message: Any, priority: Int, chain: Chain, vararg args: Any) {
-        if (enable()) {
+        if (isLoggable(message)) {
             scope.launch { channel.send(Event(tag, message, priority, chain)) }
         } else {
             chain.proceed(tag, message, priority)
         }
     }
 
-    override fun enable(): Boolean = true
 
     data class Event(val tag: String, val message: Any, val priority: Int, val chain: Chain)
 }

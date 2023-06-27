@@ -6,7 +6,7 @@ import com.taylor.easylog.Interceptor
 import com.taylor.easylog.getCallStack
 import java.lang.StringBuilder
 
-class CallStackInterceptor : Interceptor<Any> {
+class CallStackInterceptor : Interceptor<Any>() {
     companion object {
         private const val HEADER =
             "┌──────────────────────────────────────────────────────────────────────────────────────────────────────"
@@ -30,9 +30,5 @@ class CallStackInterceptor : Interceptor<Any> {
             chain.proceed(tag,callStack,priority)
         }
         chain.proceed(tag, FOOTER, priority)
-    }
-
-    override fun enable(): Boolean {
-        return true
     }
 }
