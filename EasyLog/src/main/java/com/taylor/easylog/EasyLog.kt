@@ -42,6 +42,11 @@ object EasyLog {
      */
     const val ASSERT = 7
 
+    /**
+     * Priority constant for no log
+     */
+    const val NONE = 8
+
     private val interceptors = mutableListOf<Interceptor<in Nothing>>()
     private val chain = Chain(interceptors)
 
@@ -62,6 +67,8 @@ object EasyLog {
         set(value) {
             onetimeTag.set(value)
         }
+
+    var curPriority = VERBOSE
 
     /**
      * Class names exclude from call stack

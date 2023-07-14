@@ -32,19 +32,19 @@ class DemoApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         MMKV.initialize(this)
+        EasyLog.curPriority = EasyLog.NONE
         /**
          * ensure EasyLog do init before other module, which also depends on EasyLog
          */
         initEasyLog()
-        initTaylorSdk()
         EasyLog.log(message = "i am a android develp", priority = EasyLog.ERROR)
         EasyLog.tag("telanx").log(message = "i named telanx", priority = EasyLog.ERROR)
         EasyLog.log(message = "abcdefg", priority = EasyLog.ERROR)
         EasyLog.log(IllegalArgumentException("dfdfdfdfdsfsfdsfdf"), EasyLog.ERROR)
         EasyLog.log("message %s", EasyLog.ERROR, "sss")
-        scope.launch(Dispatchers.IO) {
-            repeat(1000) { EasyLog.log("counting $it") }
-        }
+//        scope.launch(Dispatchers.IO) {
+//            repeat(1000) { EasyLog.log("counting $it") }
+//        }
         EasyLog.interceptor(FrameInterceptor()).log("this is onetime interceptor")
         EasyLog.log("after one time interceptor")
         val list = listOf(
@@ -56,13 +56,6 @@ class DemoApplication : Application() {
         EasyLog.log("after list printed")
         EasyLog.map(mapOf("abd" to 11, "ddd" to 2))
         EasyLog.map(mapOf("abd" to mapOf(1 to 2, 3 to 4), "abd" to mapOf(44 to 2, 33 to 4)))
-    }
-
-    /**
-     * init another module
-     */
-    private fun initTaylorSdk() {
-        //        TaylorSdk()
     }
 
     val okHttpClient by lazy {
