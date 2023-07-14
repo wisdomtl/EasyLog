@@ -2,17 +2,17 @@ package com.zenmen.easylog_su.interceptor
 
 import com.taylor.easylog.Chain
 import com.taylor.easylog.Interceptor
-import com.zenmen.easylog_su.proto.gen.LogOuterClass.Log
+import com.tencent.mmkv.MMKV
+import com.zenmen.easylog_su.Pipeline
+import com.zenmen.easylog_su.model.Log
 
-class SinkInterceptor(private val sink: Sink?) : Interceptor<Log> {
-    override fun log(tag: String, message: Log, priority: Int, chain: Chain, vararg args: Any) {
-        if (enable()) sink?.output(message)
-        chain.proceed(tag, message, priority)
+class SinkInterceptor<LOG>(private val pipeline: Pipeline<LOG, *>) : Interceptor<Log<LOG>>() {
+    companion object {
+        val mmkv by lazy { MMKV.defaultMMKV() }
     }
 
-    override fun enable(): Boolean = true
-
-    interface Sink {
-        fun output(message: Log)
+    override fun log(tag: String, message: Log<LOG>, priority: Int, chain: Chain, vararg args: Any) {
+        if (isLoggable(message)) mmkv.encode(message.id, pipeline.toByteArray(message.data))
+        chain.proceed(tag, message, priority)
     }
 }

@@ -1,7 +1,6 @@
 package com.taylor.easylog
 
 import android.os.Build
-import com.taylor.easylog.interceptor.FormatInterceptor
 import com.taylor.easylog.interceptor.ListInterceptor
 import com.taylor.easylog.interceptor.MapInterceptor
 import java.util.regex.Pattern
@@ -43,6 +42,11 @@ object EasyLog {
      */
     const val ASSERT = 7
 
+    /**
+     * Priority constant for no log
+     */
+    const val NONE = 8
+
     private val interceptors = mutableListOf<Interceptor<in Nothing>>()
     private val chain = Chain(interceptors)
 
@@ -64,12 +68,13 @@ object EasyLog {
             onetimeTag.set(value)
         }
 
+    var curPriority = VERBOSE
+
     /**
      * Class names exclude from call stack
      */
     private val blackList = listOf(
         EasyLog::class.java.name,
-        FormatInterceptor::class.java.name,
         Chain::class.java.name
     )
 
@@ -118,22 +123,22 @@ object EasyLog {
     /**
      * Add [Interceptor] for customizing log process
      */
-    fun addInterceptor(interceptor: Interceptor<*>) {
-        addInterceptor(interceptors.size, interceptor)
+    fun <T> addInterceptor(interceptor: Interceptor<T>, isLoggable: (T) -> Boolean = { true }) {
+        addInterceptor(interceptors.size, interceptor, isLoggable)
     }
 
     /**
      * Add [Interceptor] at [index] for customizing log process
      */
-    fun addInterceptor(index: Int, interceptor: Interceptor<*>) {
-        interceptors.add(index, interceptor)
+    fun <T> addInterceptor(index: Int, interceptor: Interceptor<T>, isLoggable: (T) -> Boolean = { true }) {
+        interceptors.add(index, interceptor.apply { this.isLoggable = isLoggable })
     }
 
     /**
      * Add one time [Interceptor]
      */
     fun interceptor(interceptor: Interceptor<*>): EasyLog {
-        interceptors.add(0, interceptor)// always add log
+        interceptors.add(0, interceptor) // always add log
         if (onetimeInterceptor == null) onetimeInterceptor = ThreadLocal()
         onetimeInterceptor?.set(interceptor)
         return this

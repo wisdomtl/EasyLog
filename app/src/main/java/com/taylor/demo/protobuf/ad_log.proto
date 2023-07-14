@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 package com.taylor.demo.protobuf.gen;
+import "google/protobuf/any.proto";
 
 message LoadSuccess {
   int32 duration = 1;
@@ -14,10 +15,7 @@ message LoadFail {
 }
 
 message Event {
-  oneof event {
-    LoadSuccess loadSuccess = 1;
-    LoadFail loadFail = 2;
-  }
+  google.protobuf.Any event = 1;
 }
 
 message EventBatch {

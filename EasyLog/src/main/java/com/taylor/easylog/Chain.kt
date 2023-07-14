@@ -1,5 +1,7 @@
 package com.taylor.easylog
 
+import android.util.Log
+
 
 /**
  * A Chain of responsibility for process log
@@ -14,7 +16,7 @@ class Chain(
         try {
             (interceptors.getOrNull(index) as? Interceptor<Any>)?.log(tag, message, priority, next, *args)
         } catch (e: Exception) {
-            // todo find another interceptor
+            Log.d("ttaylor", "Chain.proceed[tag, message, priority, args]: e=${e}")
         }
     }
 }

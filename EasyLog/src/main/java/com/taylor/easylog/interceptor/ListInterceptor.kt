@@ -7,9 +7,9 @@ import com.taylor.easylog.log
 /**
  * An [Interceptor] for print [Iterable]
  */
-class ListInterceptor<T>(private val map: ((T) -> String)?) : Interceptor<Iterable<T>> {
+class ListInterceptor<T>(private val map: ((T) -> String)?) : Interceptor<Iterable<T>>() {
     override fun log(tag: String, message: Iterable<T>, priority: Int, chain: Chain, vararg args: Any) {
-        if (enable()) {
+        if (isLoggable(message)) {
             val messageList = message.log { map?.invoke(it) ?: it.toString() }
             chain.proceed(tag, messageList, priority, args)
         } else {
@@ -17,5 +17,4 @@ class ListInterceptor<T>(private val map: ((T) -> String)?) : Interceptor<Iterab
         }
     }
 
-    override fun enable(): Boolean = true
 }
