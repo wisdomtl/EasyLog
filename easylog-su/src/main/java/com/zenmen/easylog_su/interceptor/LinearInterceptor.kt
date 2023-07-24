@@ -25,7 +25,10 @@ class LinearInterceptor : Interceptor<Any>() {
     init {
         scope.launch {
             channel.consumeEach { event ->
-                event.apply { chain.proceed(tag, message, priority) }
+                try {
+                    event.apply { chain.proceed(tag, message, priority) }
+                } catch (e: Exception) {
+                }
             }
         }
     }
