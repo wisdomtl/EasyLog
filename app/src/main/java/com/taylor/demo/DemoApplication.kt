@@ -32,7 +32,7 @@ class DemoApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         MMKV.initialize(this)
-        EasyLog.curPriority = EasyLog.NONE
+//        EasyLog.curPriority = EasyLog.NONE
         /**
          * ensure EasyLog do init before other module, which also depends on EasyLog
          */

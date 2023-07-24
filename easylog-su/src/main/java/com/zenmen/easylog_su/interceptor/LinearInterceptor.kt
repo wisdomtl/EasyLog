@@ -2,6 +2,7 @@ package com.zenmen.easylog_su.interceptor
 
 import com.taylor.easylog.Chain
 import com.taylor.easylog.Interceptor
+import com.zenmen.easylog_su.singleLogDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -23,7 +24,7 @@ class LinearInterceptor : Interceptor<Any>() {
     private val channel = Channel<Event>(CHANNEL_CAPACITY)
 
     init {
-        scope.launch {
+        scope.launch(singleLogDispatcher) {
             channel.consumeEach { event ->
                 try {
                     event.apply { chain.proceed(tag, message, priority) }
