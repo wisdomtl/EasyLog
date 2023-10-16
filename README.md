@@ -62,14 +62,14 @@ EasyLog.log(User(name = "taylor", age = 20))
 ### log List
 ```kotlin
 val array = listOf(1,2,3)
-ZLog.list(array)// output ”[1, 2, 3]“
+EasyLog.list(array)// output ”[1, 2, 3]“
 
 val users = listOf(
     User(name = "peter", age = 18),
     User(name = "joice", age = 20),
     User(name = "martin", age = 10),
 )
-ZLog.list(users) { it.name } // output ”[peter, joice, martin]“
+EasyLog.list(users) { it.name } // output ”[peter, joice, martin]“
 ```
 ### log Map
 ```kotlin
@@ -77,7 +77,7 @@ val map = mapOf(
     "a" to mapOf( "1" to true), 
     "b" to mapOf( "2" to false, "3" to true)
 )
-ZLog.map(map)
+EasyLog.map(map)
 ```
 output：
 ```
@@ -117,8 +117,8 @@ EasyLog.log("end %s", DEBUG, "ab")
 
 ### one-time interceptor
 ```kotlin
-ZLog.interceptor(FrameInterceptor()).log("higlight")
-ZLog.log("after highlight")
+EasyLog.interceptor(FrameInterceptor()).log("higlight")
+EasyLog.log("after highlight")
 ```
 output:
 ```
